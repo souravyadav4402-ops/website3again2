@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>3D Showroom — AURAFX Automotive Studio</title>
+<meta name="description" content="Enter the AURAFX immersive 3D showroom. Explore a car in a Vision Pro-style spatial environment."/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+body { overflow: hidden; }
+#showroom-canvas { position: fixed; inset: 0; z-index: 0; }
+/* HUD NAV */
+.sr-nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  background: rgba(11,11,15,0.5);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.sr-nav-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); text-decoration: none; }
+.sr-nav-logo-mark { width: 28px; height: 28px; background: var(--accent-grad); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 900; color: #fff; }
+.sr-nav-logo span { color: var(--chrome); }
+.sr-nav-right { display: flex; align-items: center; gap: 16px; }
+.sr-exit { padding: 8px 18px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.15); color: var(--white-dim); background: rgba(255,255,255,0.04); transition: all 0.3s; cursor: pointer; text-decoration: none; }
+.sr-exit:hover { border-color: rgba(255,255,255,0.3); color: var(--white); background: rgba(255,255,255,0.08); }
+.sr-loading {
+  position: fixed; inset: 0; z-index: 500;
+  background: var(--black);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 24px;
+  transition: opacity 0.8s, visibility 0.8s;
+}
+.sr-loading.hidden { opacity: 0; visibility: hidden; }
+.sr-loading-logo { font-family: var(--font-display); font-size: 2rem; font-weight: 700; letter-spacing: 0.08em; color: var(--white); }
+.sr-loading-logo span { color: var(--chrome); }
+.sr-loading-bar-wrap { width: 200px; height: 1px; background: var(--border); border-radius: 1px; overflow: hidden; }
+.sr-loading-bar { height: 100%; width: 0; background: var(--blue); border-radius: 1px; transition: width 0.1s; }
+.sr-loading p { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white-faint); }
+/* HUD PANELS */
+.sr-panel {
+  position: fixed; z-index: 200;
+  background: rgba(17,24,39,0.72);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 24px;
+  min-width: 240px;
+  transition: opacity 0.6s, transform 0.6s var(--ease-out), box-shadow 0.4s;
+  pointer-events: all;
+}
+.sr-panel:hover { box-shadow: 0 0 40px rgba(59,130,246,0.12); border-color: rgba(59,130,246,0.2); }
+.sr-panel-title { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); margin-bottom: 16px; }
+/* Left Panel — Services */
+.sr-panel-services { left: 32px; top: 50%; transform: translateY(-50%); }
+.sr-svc-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; border-radius: 10px; cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  margin-bottom: 6px;
+}
+.sr-svc-item:last-child { margin-bottom: 0; }
+.sr-svc-item:hover { background: rgba(59,130,246,0.12); transform: translateX(4px); }
+.sr-svc-item.active { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.25); }
+.sr-svc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+.sr-svc-item span { font-size: 0.85rem; font-weight: 500; color: var(--white); }
+/* Right Panel — Finish switcher */
+.sr-panel-finish { right: 32px; top: 50%; transform: translateY(-50%); }
+.finish-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.finish-btn {
+  aspect-ratio: 1; border-radius: 12px; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  border: 1px solid rgba(255,255,255,0.08); transition: border-color 0.3s, transform 0.3s;
+  padding: 12px 8px;
+}
+.finish-btn:hover { border-color: rgba(59,130,246,0.4); transform: scale(1.04); }
+.finish-btn.active { border-color: var(--blue); box-shadow: 0 0 20px rgba(59,130,246,0.2); }
+.finish-swatch { width: 32px; height: 32px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.1); }
+.finish-btn span { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white-dim); text-align: center; }
+/* Bottom Panel — CTA */
+.sr-panel-cta {
+  bottom: 40px; left: 50%; transform: translateX(-50%);
+  min-width: 400px; text-align: center;
+}
+.sr-cta-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+.sr-cta-sub { font-size: 0.82rem; color: var(--white-dim); margin-bottom: 18px; }
+.sr-cta-btns { display: flex; gap: 10px; justify-content: center; }
+.sr-cta-btn { padding: 10px 22px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; transition: all 0.3s; cursor: pointer; }
+.sr-cta-btn-primary { background: var(--blue); color: #fff; border: 1px solid transparent; }
+.sr-cta-btn-primary:hover { background: var(--blue-bright); box-shadow: 0 0 20px var(--blue-glow); }
+.sr-cta-btn-wa { background: rgba(37,211,102,0.15); color: #4ADE80; border: 1px solid rgba(37,211,102,0.3); }
+.sr-cta-btn-wa:hover { background: rgba(37,211,102,0.25); }
+/* Top info bar */
+.sr-info-bar {
+  position: fixed; top: calc(var(--nav-h) + 16px); left: 50%; transform: translateX(-50%);
+  z-index: 200;
+  background: rgba(17,24,39,0.6); backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.07); border-radius: 40px;
+  padding: 8px 24px;
+  display: flex; align-items: center; gap: 20px;
+}
+.sr-info-item { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white-dim); display: flex; align-items: center; gap: 8px; }
+.sr-info-dot { width: 6px; height: 6px; background: #22C55E; border-radius: 50%; animation: pulseDot 2s infinite; }
+@keyframes pulseDot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.5)} }
+.sr-info-sep { width: 1px; height: 14px; background: var(--border); }
+/* Controls hint */
+.sr-controls-hint {
+  position: fixed; bottom: 130px; right: 32px; z-index: 200;
+  background: rgba(17,24,39,0.6); backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.06); border-radius: 12px;
+  padding: 16px 18px;
+  font-size: 0.72rem; color: var(--white-dim); line-height: 1.8;
+}
+.sr-controls-hint p { display: flex; align-items: center; gap: 8px; }
+.sr-controls-hint kbd {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px; padding: 1px 6px; font-family: inherit; font-size: 0.68rem; color: var(--white);
+}
+/* Panel breathe animation */
+@keyframes panelFloat { 0%,100%{transform:translateY(-50%)} 50%{transform:translateY(calc(-50% - 6px))} }
+.sr-panel-services { animation: panelFloat 6s ease-in-out infinite; }
+.sr-panel-finish   { animation: panelFloat 7s ease-in-out 1s infinite; }
+@keyframes ctaFloat { 0%,100%{transform:translateX(-50%)} 50%{transform:translate(-50%,-6px)} }
+.sr-panel-cta { animation: ctaFloat 8s ease-in-out 2s infinite; }
+
+@media (max-width: 768px) {
+  .sr-panel-services { left: 12px; min-width: 160px; padding: 16px; }
+  .sr-panel-finish   { right: 12px; min-width: 160px; padding: 16px; }
+  .sr-panel-cta      { min-width: calc(100vw - 24px); bottom: 16px; }
+  .sr-info-bar       { display: none; }
+  .sr-controls-hint  { display: none; }
+  .sr-svc-item span  { font-size: 0.75rem; }
+  .finish-btn span   { font-size: 0.6rem; }
+  .sr-nav { padding: 0 20px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="showroom-canvas"></canvas>
+
+<!-- LOADING -->
+<div class="sr-loading" id="srLoading">
+  <div class="sr-loading-logo">AURA<span>FX</span></div>
+  <div class="sr-loading-bar-wrap"><div class="sr-loading-bar" id="loadBar"></div></div>
+  <p>Loading Immersive Showroom</p>
+</div>
+
+<!-- NAV -->
+<nav class="sr-nav">
+  <a href="index.html" class="sr-nav-logo"><div class="sr-nav-logo-mark">AF</div><span>AURAFX</span> &nbsp;<span style="opacity:0.4;font-weight:300;font-size:0.85rem;">Showroom</span></a>
+  <div class="sr-nav-right">
+    <span style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--white-faint);">3D Experience</span>
+    <a href="index.html" class="sr-exit">← Exit Showroom</a>
+  </div>
+</nav>
+
+<!-- INFO BAR -->
+<div class="sr-info-bar">
+  <div class="sr-info-item"><div class="sr-info-dot"></div>Live Showroom</div>
+  <div class="sr-info-sep"></div>
+  <div class="sr-info-item">Drag to Orbit</div>
+  <div class="sr-info-sep"></div>
+  <div class="sr-info-item">Scroll to Zoom</div>
+  <div class="sr-info-sep"></div>
+  <div class="sr-info-item">Rohini, Delhi</div>
+</div>
+
+<!-- SERVICES PANEL (left) -->
+<div class="sr-panel sr-panel-services" id="srPanelSvc">
+  <div class="sr-panel-title">Our Services</div>
+  <div class="sr-svc-item active" data-svc="wrap" onclick="selectSvc(this,'wrap')">
+    <div class="sr-svc-dot"></div><span>Car Wrapping</span>
+  </div>
+  <div class="sr-svc-item" data-svc="ppf" onclick="selectSvc(this,'ppf')">
+    <div class="sr-svc-dot" style="background:#22C55E;"></div><span>PPF</span>
+  </div>
+  <div class="sr-svc-item" data-svc="ceramic" onclick="selectSvc(this,'ceramic')">
+    <div class="sr-svc-dot" style="background:#8B5CF6;"></div><span>Ceramic Coating</span>
+  </div>
+  <div class="sr-svc-item" data-svc="detail" onclick="selectSvc(this,'detail')">
+    <div class="sr-svc-dot" style="background:#F59E0B;"></div><span>Detailing</span>
+  </div>
+  <div class="sr-svc-item" data-svc="custom" onclick="selectSvc(this,'custom')">
+    <div class="sr-svc-dot" style="background:#06B6D4;"></div><span>Custom Builds</span>
+  </div>
+  <div id="svcDesc" style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);font-size:0.78rem;color:var(--white-dim);line-height:1.6;">
+    Transform your car's colour and finish without affecting original paint. Removable and fully reversible.
+  </div>
+</div>
+
+
+<!-- FINISH PANEL (right) -->
+<div class="sr-panel sr-panel-finish" id="srPanelFinish">
+  <div class="sr-panel-title">Finish / Material</div>
+  <div class="finish-grid">
+    <div class="finish-btn active" onclick="setFinish(this,'paint',0x1a2d4a)" title="Original Paint">
+      <div class="finish-swatch" style="background:linear-gradient(135deg,#1a2d4a,#2d4a6a);"></div>
+      <span>Original</span>
+    </div>
+    <div class="finish-btn" onclick="setFinish(this,'matte',0x0a0a0a)" title="Matte Black">
+      <div class="finish-swatch" style="background:#111;border-color:#333;"></div>
+      <span>Matte Black</span>
+    </div>
+    <div class="finish-btn" onclick="setFinish(this,'gloss',0xc0392b)" title="Gloss Red">
+      <div class="finish-swatch" style="background:linear-gradient(135deg,#c0392b,#e74c3c);"></div>
+      <span>Gloss Red</span>
+    </div>
+    <div class="finish-btn" onclick="setFinish(this,'satin',0x1a3a2a)" title="Satin Green">
+      <div class="finish-swatch" style="background:linear-gradient(135deg,#1a3a2a,#2a5a3a);"></div>
+      <span>Satin Green</span>
+    </div>
+    <div class="finish-btn" onclick="setFinish(this,'chrome',0xC0C8D8)" title="Chrome Silver">
+      <div class="finish-swatch" style="background:linear-gradient(135deg,#8a9ab0,#c0c8d8,#8a9ab0);"></div>
+      <span>Chrome</span>
+    </div>
+    <div class="finish-btn" onclick="setFinish(this,'shift',0x6B21A8)" title="Colour Shift">
+      <div class="finish-swatch" style="background:linear-gradient(135deg,#6B21A8,#1d4ed8,#059669);"></div>
+      <span>Colour Shift</span>
+    </div>
+  </div>
+  <div id="finishLabel" style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.07);font-size:0.72rem;color:var(--white-dim);letter-spacing:0.06em;text-transform:uppercase;">
+    Current: Original Paint
+  </div>
+</div>
+
+<!-- CTA PANEL (bottom) -->
+<div class="sr-panel sr-panel-cta" id="srPanelCta">
+  <div class="sr-cta-title">Book Your Transformation</div>
+  <div class="sr-cta-sub">Rohini, Delhi · Mon–Sat 9am–7pm · Real cars. Real results.</div>
+  <div class="sr-cta-btns">
+    <a href="contact.html" class="sr-cta-btn sr-cta-btn-primary">Book Now</a>
+    <a href="https://wa.me/919999999999?text=Hi!%20I%20just%20visited%20the%20AURAFX%20showroom%20and%20I%27d%20like%20a%20quote." class="sr-cta-btn sr-cta-btn-wa" target="_blank">
+      WhatsApp Us
+    </a>
+    <a href="services.html" class="sr-cta-btn" style="background:rgba(255,255,255,0.06);color:var(--white-dim);border:1px solid rgba(255,255,255,0.1);">All Services</a>
+  </div>
+</div>
+
+<!-- Controls hint -->
+<div class="sr-controls-hint">
+  <p><kbd>Drag</kbd> Orbit around car</p>
+  <p><kbd>Scroll</kbd> Zoom in / out</p>
+  <p><kbd>Click panels</kbd> Switch finish</p>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ── SCENE SETUP ── */
+const canvas = document.getElementById('showroom-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0B0B0F);
+scene.fog = new THREE.FogExp2(0x0B0B0F, 0.018);
+
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 200);
+camera.position.set(6, 2.8, 8);
+
+/* ── ORBIT CONTROLS ── */
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.minDistance = 4;
+controls.maxDistance = 18;
+controls.maxPolarAngle = Math.PI / 2 - 0.05;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.4;
+controls.target.set(0, 0.8, 0);
+
+/* ── FLOOR ── */
+const floorGeo = new THREE.CircleGeometry(20, 128);
+const floorMat = new THREE.MeshStandardMaterial({
+  color: 0x111520,
+  metalness: 0.9,
+  roughness: 0.15,
+});
+const floor = new THREE.Mesh(floorGeo, floorMat);
+floor.rotation.x = -Math.PI / 2;
+floor.receiveShadow = true;
+scene.add(floor);
+
+/* Glowing platform ring */
+const ringGeo = new THREE.TorusGeometry(3.2, 0.04, 16, 128);
+const ringMat = new THREE.MeshStandardMaterial({ color: 0x3B82F6, emissive: 0x3B82F6, emissiveIntensity: 1.5, metalness: 1, roughness: 0 });
+const ring = new THREE.Mesh(ringGeo, ringMat);
+ring.rotation.x = -Math.PI / 2;
+ring.position.y = 0.01;
+scene.add(ring);
+
+/* Inner platform */
+const platGeo = new THREE.CylinderGeometry(3.1, 3.1, 0.04, 128);
+const platMat = new THREE.MeshStandardMaterial({ color: 0x151d2e, metalness: 0.95, roughness: 0.1 });
+const platform = new THREE.Mesh(platGeo, platMat);
+platform.position.y = -0.02;
+platform.receiveShadow = true;
+scene.add(platform);
+
+/* ── CAR MODEL (Detailed CSS-car in 3D) ── */
+const carGroup = new THREE.Group();
+scene.add(carGroup);
+
+// Car body material — starts as deep blue
+let bodyMat = new THREE.MeshStandardMaterial({ color: 0x1a2d4a, metalness: 0.6, roughness: 0.3 });
+let glassMat = new THREE.MeshStandardMaterial({ color: 0x0d1520, metalness: 0.1, roughness: 0.05, transparent: true, opacity: 0.75 });
+const darkMat = new THREE.MeshStandardMaterial({ color: 0x080c14, metalness: 0.8, roughness: 0.3 });
+const chromeMat = new THREE.MeshStandardMaterial({ color: 0x8090a0, metalness: 1.0, roughness: 0.05 });
+const tyreMat = new THREE.MeshStandardMaterial({ color: 0x0f0f0f, metalness: 0, roughness: 0.9 });
+const rimMat = new THREE.MeshStandardMaterial({ color: 0x505870, metalness: 0.9, roughness: 0.15 });
+const lightMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 0.3, metalness: 0, roughness: 0.2 });
+const rlightMat = new THREE.MeshStandardMaterial({ color: 0xff3322, emissive: 0xff2200, emissiveIntensity: 0.5, metalness: 0, roughness: 0.2 });
+
+// Main body — SUV-proportioned (like a Creta/Seltos)
+const bodyGeom = new THREE.BoxGeometry(3.8, 0.85, 1.85);
+const body = new THREE.Mesh(bodyGeom, bodyMat);
+body.position.set(0, 0.7, 0);
+body.castShadow = true;
+carGroup.add(body);
+
+// Roof cabin
+const cabinGeom = new THREE.BoxGeometry(2.1, 0.75, 1.7);
+const cabin = new THREE.Mesh(cabinGeom, bodyMat);
+cabin.position.set(-0.1, 1.38, 0);
+cabin.castShadow = true;
+carGroup.add(cabin);
+
+// Windscreen
+const windscreenGeom = new THREE.PlaneGeometry(1.0, 0.7);
+const windscreen = new THREE.Mesh(windscreenGeom, glassMat);
+windscreen.position.set(0.97, 1.38, 0);
+windscreen.rotation.y = Math.PI / 2;
+windscreen.rotation.z = -0.3;
+carGroup.add(windscreen);
+
+// Rear screen
+const rearscreenGeom = new THREE.PlaneGeometry(0.9, 0.6);
+const rearscreen = new THREE.Mesh(rearscreenGeom, glassMat);
+rearscreen.position.set(-1.18, 1.38, 0);
+rearscreen.rotation.y = Math.PI / 2;
+rearscreen.rotation.z = 0.3;
+carGroup.add(rearscreen);
+
+// Side windows (x4)
+[-0.3, 0.45].forEach((x, i) => {
+  [1, -1].forEach(side => {
+    const wg = new THREE.PlaneGeometry(0.65, 0.5);
+    const w = new THREE.Mesh(wg, glassMat);
+    w.position.set(x, 1.38, side * 0.86);
+    w.rotation.y = side * Math.PI / 2;
+    carGroup.add(w);
+  });
+});
+
+// Bonnet slope
+const bonnetGeom = new THREE.BoxGeometry(1.2, 0.12, 1.8);
+const bonnet = new THREE.Mesh(bonnetGeom, bodyMat);
+bonnet.position.set(1.6, 1.0, 0);
+bonnet.rotation.z = 0.18;
+bonnet.castShadow = true;
+carGroup.add(bonnet);
+
+// Boot slope
+const bootGeom = new THREE.BoxGeometry(0.8, 0.1, 1.8);
+const boot = new THREE.Mesh(bootGeom, bodyMat);
+boot.position.set(-1.65, 0.98, 0);
+boot.rotation.z = -0.12;
+boot.castShadow = true;
+carGroup.add(boot);
+
+// Front bumper
+const fbGeom = new THREE.BoxGeometry(0.25, 0.4, 1.85);
+const fbump = new THREE.Mesh(fbGeom, darkMat);
+fbump.position.set(2.02, 0.42, 0);
+carGroup.add(fbump);
+
+// Rear bumper
+const rbGeom = new THREE.BoxGeometry(0.25, 0.4, 1.85);
+const rbump = new THREE.Mesh(rbGeom, darkMat);
+rbump.position.set(-2.02, 0.42, 0);
+carGroup.add(rbump);
+
+// Front grille
+const grilleGeom = new THREE.BoxGeometry(0.08, 0.22, 0.9);
+const grille = new THREE.Mesh(grilleGeom, chromeMat);
+grille.position.set(2.08, 0.5, 0);
+carGroup.add(grille);
+
+// Headlights
+[-0.65, 0.65].forEach(z => {
+  const hlg = new THREE.BoxGeometry(0.1, 0.16, 0.45);
+  const hl = new THREE.Mesh(hlg, lightMat);
+  hl.position.set(2.07, 0.68, z);
+  carGroup.add(hl);
+});
+
+// Taillights
+[-0.65, 0.65].forEach(z => {
+  const tlg = new THREE.BoxGeometry(0.08, 0.14, 0.5);
+  const tl = new THREE.Mesh(tlg, rlightMat);
+  tl.position.set(-2.07, 0.68, z);
+  carGroup.add(tl);
+});
+
+// Wheels (4 wheels: tyre + rim)
+[[1.2, -0.98], [-1.2, -0.98], [1.2, 0.98], [-1.2, 0.98]].forEach(([x, z]) => {
+  const tyreGeo = new THREE.TorusGeometry(0.42, 0.16, 18, 40);
+  const tyre = new THREE.Mesh(tyreGeo, tyreMat);
+  tyre.rotation.y = Math.PI / 2;
+  tyre.position.set(x, 0.38, z);
+  tyre.castShadow = true;
+  carGroup.add(tyre);
+
+  const rimGeo = new THREE.CylinderGeometry(0.28, 0.28, 0.18, 12);
+  const rim = new THREE.Mesh(rimGeo, rimMat);
+  rim.rotation.z = Math.PI / 2;
+  rim.position.set(x, 0.38, z);
+  carGroup.add(rim);
+
+  // Spoke accents
+  for(let i=0; i<5; i++) {
+    const sg = new THREE.BoxGeometry(0.14, 0.04, 0.04);
+    const sm = new THREE.Mesh(sg, chromeMat);
+    const angle = (i/5)*Math.PI*2;
+    sm.position.set(x + Math.cos(angle)*0.18, 0.38, z + Math.sin(angle)*0.18);
+    carGroup.add(sm);
+  }
+});
+
+// Door handles
+[0.4, -0.6].forEach(x => {
+  [0.94, -0.94].forEach(z => {
+    const dhg = new THREE.BoxGeometry(0.2, 0.04, 0.03);
+    const dh = new THREE.Mesh(dhg, chromeMat);
+    dh.position.set(x, 0.88, z);
+    carGroup.add(dh);
+  });
+});
+
+// Side skirts
+[0.94, -0.94].forEach(z => {
+  const skg = new THREE.BoxGeometry(3.0, 0.12, 0.06);
+  const sk = new THREE.Mesh(skg, darkMat);
+  sk.position.set(0, 0.3, z);
+  carGroup.add(sk);
+});
+
+// Roof rail
+const rrg = new THREE.BoxGeometry(1.8, 0.06, 0.05);
+[0.82, -0.82].forEach(z => {
+  const rr = new THREE.Mesh(rrg, chromeMat);
+  rr.position.set(-0.1, 1.78, z);
+  carGroup.add(rr);
+});
+
+/* ── PARTICLES ── */
+const particleCount = 400;
+const posArr = new Float32Array(particleCount * 3);
+for(let i=0; i<particleCount; i++) {
+  posArr[i*3  ] = (Math.random()-0.5)*30;
+  posArr[i*3+1] = Math.random()*14;
+  posArr[i*3+2] = (Math.random()-0.5)*30;
+}
+const partGeo = new THREE.BufferGeometry();
+partGeo.setAttribute('position', new THREE.BufferAttribute(posArr,3));
+const partMat = new THREE.PointsMaterial({ color: 0x3B82F6, size: 0.04, transparent: true, opacity: 0.5 });
+const particles = new THREE.Points(partGeo, partMat);
+scene.add(particles);
+
+/* ── ENVIRONMENT SPHERES (backdrop depth) ── */
+const envSphereGeo = new THREE.SphereGeometry(50, 32, 32);
+const envSphereMat = new THREE.MeshBasicMaterial({ color: 0x080a10, side: THREE.BackSide });
+scene.add(new THREE.Mesh(envSphereGeo, envSphereMat));
+
+/* ── LIGHTS ── */
+// Ambient
+const ambient = new THREE.AmbientLight(0x1a2030, 0.8);
+scene.add(ambient);
+
+// Main overhead spot
+const spotlight = new THREE.SpotLight(0xffffff, 12, 30, Math.PI/5, 0.3, 1.5);
+spotlight.position.set(0, 12, 0);
+spotlight.target.position.set(0, 0, 0);
+spotlight.castShadow = true;
+spotlight.shadow.mapSize.width  = 2048;
+spotlight.shadow.mapSize.height = 2048;
+spotlight.shadow.camera.near = 0.5;
+spotlight.shadow.camera.far  = 40;
+scene.add(spotlight);
+scene.add(spotlight.target);
+
+// Rim light 1 — electric blue
+const rimBlue = new THREE.DirectionalLight(0x3B82F6, 4);
+rimBlue.position.set(-8, 3, 5);
+scene.add(rimBlue);
+
+// Rim light 2 — warm white
+const rimWhite = new THREE.DirectionalLight(0xd0e0ff, 2.5);
+rimWhite.position.set(8, 4, -5);
+scene.add(rimWhite);
+
+// Fill
+const fill = new THREE.HemisphereLight(0x1a2a3a, 0x0a0a10, 1);
+scene.add(fill);
+
+// Platform glow point
+const platGlow = new THREE.PointLight(0x3B82F6, 3, 6, 2);
+platGlow.position.set(0, 0.3, 0);
+scene.add(platGlow);
+
+/* ── LOADING SIMULATION ── */
+let progress = 0;
+const loadBar = document.getElementById('loadBar');
+const srLoading = document.getElementById('srLoading');
+const loadInterval = setInterval(() => {
+  progress += Math.random() * 12;
+  if(progress >= 100) {
+    progress = 100;
+    loadBar.style.width = '100%';
+    clearInterval(loadInterval);
+    setTimeout(() => { srLoading.classList.add('hidden'); }, 500);
+  } else {
+    loadBar.style.width = progress + '%';
+  }
+}, 80);
+
+/* ── FINISH SWITCHER (global) ── */
+const finishConfigs = {
+  paint:  { color: 0x1a2d4a, metalness: 0.6, roughness: 0.3, emissive: 0x000000, emissiveIntensity: 0 },
+  matte:  { color: 0x0c0c0c, metalness: 0.0, roughness: 0.9, emissive: 0x000000, emissiveIntensity: 0 },
+  gloss:  { color: 0xc0392b, metalness: 0.4, roughness: 0.05, emissive: 0x000000, emissiveIntensity: 0 },
+  satin:  { color: 0x1a3a2a, metalness: 0.2, roughness: 0.4, emissive: 0x000000, emissiveIntensity: 0 },
+  chrome: { color: 0xC0C8D8, metalness: 1.0, roughness: 0.02, emissive: 0x000000, emissiveIntensity: 0 },
+  shift:  { color: 0x6B21A8, metalness: 0.5, roughness: 0.2, emissive: 0x3B21A8, emissiveIntensity: 0.15 },
+};
+const finishNames = { paint:'Original Paint', matte:'Matte Black', gloss:'Gloss Red', satin:'Satin Forest Green', chrome:'Chrome Silver', shift:'Colour Shift Wrap' };
+
+const bodyMeshes = [body, cabin, bonnet, boot, fbump, rbump];
+window.setFinish = function(btn, key, _color) {
+  document.querySelectorAll('.finish-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const cfg = finishConfigs[key];
+  bodyMeshes.forEach(m => {
+    m.material.color.setHex(cfg.color);
+    m.material.metalness = cfg.metalness;
+    m.material.roughness = cfg.roughness;
+    m.material.emissive = new THREE.Color(cfg.emissive);
+    m.material.emissiveIntensity = cfg.emissiveIntensity;
+    m.material.needsUpdate = true;
+  });
+  document.getElementById('finishLabel').textContent = 'Current: ' + finishNames[key];
+};
+
+const svcDescs = {
+  wrap:    'Transform your car\'s colour and finish without affecting original paint. Removable and fully reversible.',
+  ppf:     'Self-healing TPU film that protects against stone chips, scratches, and UV damage for up to 5 years.',
+  ceramic: 'Nano-ceramic coating that creates a hydrophobic, scratch-resistant surface with deep gloss.',
+  detail:  'Full interior & exterior deep clean, decontamination, and restoration to showroom standard.',
+  custom:  'Alloys, calipers, chrome delete, interior upgrades — a fully bespoke build for your car.',
+};
+window.selectSvc = function(el, key) {
+  document.querySelectorAll('.sr-svc-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('svcDesc').textContent = svcDescs[key];
+};
+
+/* ── RESIZE ── */
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+/* ── RENDER LOOP ── */
+let t = 0;
+function animate() {
+  requestAnimationFrame(animate);
+  t += 0.01;
+  controls.update();
+  // Particle drift
+  particles.rotation.y = t * 0.02;
+  // Ring pulse
+  ringMat.emissiveIntensity = 1.2 + Math.sin(t * 1.5) * 0.4;
+  platGlow.intensity = 2.5 + Math.sin(t * 2) * 0.8;
+  // Colour shift animation
+  if(bodyMat.emissiveIntensity > 0) {
+    const hue = (t * 0.1) % 1;
+    bodyMeshes.forEach(m => { m.material.emissive.setHSL(hue, 0.8, 0.15); });
+  }
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+</body>
+</html>
