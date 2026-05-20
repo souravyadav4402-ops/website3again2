@@ -4,122 +4,47 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Portfolio — AURAFX Automotive Studio</title>
-<meta name="description" content="Real transformations on real cars. Explore before & after work by AURAFX Automotive Studio, Rohini Delhi."/>
+<meta name="description" content="Real transformations on real cars. Before & after work by AURAFX Automotive Studio, Rohini Delhi."/>
 <link rel="stylesheet" href="style.css"/>
 <style>
-/* PORTFOLIO */
-.port-hero { padding: calc(var(--nav-h) + 80px) 48px 80px; max-width: 1400px; margin: 0 auto; }
-.port-hero .label { margin-bottom: 14px; }
-.port-hero h1 { max-width: 700px; margin-bottom: 24px; }
-.port-hero p  { max-width: 560px; }
-.port-filter-bar {
-  position: sticky; top: var(--nav-h); z-index: 100;
-  background: rgba(11,11,15,0.92); backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 48px;
-}
-.port-filters { max-width: 1400px; margin: 0 auto; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
-.port-filters::-webkit-scrollbar { display: none; }
-.port-filter-btn {
-  padding: 18px 24px;
-  font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--white-dim); border-bottom: 2px solid transparent;
-  transition: color 0.3s, border-color 0.3s; white-space: nowrap;
-  background: none; border-top: none; border-left: none; border-right: none; cursor: pointer;
-}
-.port-filter-btn:hover { color: var(--white); }
-.port-filter-btn.active { color: var(--blue-bright); border-bottom-color: var(--blue); }
-.port-main { padding: 80px 48px 120px; max-width: 1400px; margin: 0 auto; }
-.port-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.port-item {
-  border-radius: 16px; overflow: hidden;
-  background: var(--surface); border: 1px solid var(--border);
-  cursor: pointer;
-  transition: transform 0.4s var(--ease-cinema), border-color 0.4s, box-shadow 0.4s;
-}
-.port-item:hover { transform: translateY(-6px); border-color: rgba(59,130,246,0.25); box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
-.port-item--lg { grid-column: span 2; }
-.ba-slider-wrap { position: relative; width: 100%; height: 280px; overflow: hidden; user-select: none; }
-.port-item--lg .ba-slider-wrap { height: 360px; }
-.ba-img-before, .ba-img-after {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white-dim);
-}
-.ba-img-before { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); clip-path: inset(0 50% 0 0); }
-.ba-img-after  { background: linear-gradient(135deg, #0d1829 0%, #1a2d4a 100%); }
-.ba-img-before span, .ba-img-after span { position: absolute; bottom: 14px; padding: 4px 12px; border-radius: 4px; background: rgba(0,0,0,0.6); font-weight: 600; }
-.ba-img-before span { left: 14px; }
-.ba-img-after  span { right: 14px; }
-.ba-slider-line {
-  position: absolute; top: 0; bottom: 0; left: 50%;
-  width: 2px; background: var(--blue); transform: translateX(-50%);
-  z-index: 3; cursor: ew-resize;
-}
-.ba-slider-handle {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40px; height: 40px;
-  background: var(--blue); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 0 20px rgba(59,130,246,0.6);
-  z-index: 4; cursor: ew-resize;
-}
-.port-meta { padding: 20px 24px; }
-.port-meta h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
-.port-meta-row { display: flex; justify-content: space-between; align-items: center; }
-.port-meta p { font-size: 0.82rem; color: var(--white-dim); }
-.port-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
-.port-tag {
-  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 3px 9px; border-radius: 3px;
-  background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); color: var(--blue-bright);
-}
-/* Lightbox */
-.lightbox {
-  position: fixed; inset: 0; z-index: 2000;
-  background: rgba(0,0,0,0.94);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.4s;
-  backdrop-filter: blur(12px);
-}
-.lightbox.open { opacity: 1; pointer-events: all; }
-.lb-inner { max-width: 90vw; max-height: 90vh; position: relative; }
-.lb-close {
-  position: fixed; top: 32px; right: 32px;
-  width: 44px; height: 44px;
-  background: rgba(255,255,255,0.08); border: 1px solid var(--border); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; cursor: pointer;
-  transition: background 0.3s; font-size: 1.2rem; color: var(--white);
-}
-.lb-close:hover { background: rgba(255,255,255,0.15); }
-.lb-car { width: 80vw; max-width: 900px; height: 70vh; border-radius: 16px; overflow: hidden; }
-.lb-car-visual { width: 100%; height: 100%; background: linear-gradient(135deg, #0d1829 0%, #1a2d4a 50%, #0d1829 100%); display: flex; align-items: center; justify-content: center; }
-.lb-car-label { font-family: var(--font-display); font-size: 1.5rem; color: rgba(59,130,246,0.5); letter-spacing: 0.1em; }
-.lb-info { padding: 20px 0; display: flex; justify-content: space-between; align-items: center; }
-.lb-info h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; }
-.lb-info p { font-size: 0.85rem; color: var(--white-dim); }
-.lb-nav { display: flex; gap: 12px; }
-.lb-nav-btn {
-  width: 40px; height: 40px;
-  background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; cursor: pointer;
-  transition: background 0.3s;
-}
-.lb-nav-btn:hover { background: var(--blue); border-color: var(--blue); }
-
-@media (max-width: 768px) {
-  .port-hero { padding: calc(var(--nav-h) + 60px) 24px 60px; }
-  .port-filter-bar { padding: 0 24px; }
-  .port-main { padding: 60px 24px 80px; }
-  .port-grid { grid-template-columns: 1fr; }
-  .port-item--lg { grid-column: span 1; }
-  .lb-car { width: 95vw; height: 50vh; }
-}
+.page-hero{padding:calc(var(--nav-h) + 80px) 0 80px;position:relative;overflow:hidden;}
+.page-hero__bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(59,130,246,.05),transparent 60%),linear-gradient(180deg,var(--black),var(--surface));}
+.page-hero__content{position:relative;z-index:1;}
+.filter-bar{position:sticky;top:var(--nav-h);z-index:100;background:rgba(11,11,15,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 var(--gutter);}
+.filter-bar__inner{max-width:var(--container);margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+.filter-bar__inner::-webkit-scrollbar{display:none;}
+.port-filter-btn{padding:18px 24px;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--white-dim);border:none;border-bottom:2px solid transparent;background:none;cursor:pointer;white-space:nowrap;transition:color .3s,border-color .3s;}
+.port-filter-btn:hover{color:var(--white);}
+.port-filter-btn.active{color:var(--blue-bright);border-bottom-color:var(--blue);}
+.port-main{padding:80px 0 120px;}
+.port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
 </style>
 </head>
 <body>
+
+<style>
+.port-item{border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);border:1px solid var(--border);cursor:pointer;transition:transform .5s var(--ease-out),border-color .4s,box-shadow .5s;}
+.port-item:hover{transform:translateY(-6px);border-color:rgba(59,130,246,.2);box-shadow:0 24px 60px rgba(0,0,0,.4);}
+.port-item--wide{grid-column:span 2;}
+.ba-wrap{position:relative;width:100%;height:280px;overflow:hidden;user-select:none;}
+.port-item--wide .ba-wrap{height:340px;}
+.ba-img-before,.ba-img-after{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.ba-img-before{clip-path:inset(0 50% 0 0);}
+.ba-img-before span,.ba-img-after span{position:absolute;bottom:12px;padding:4px 12px;border-radius:4px;background:rgba(0,0,0,.6);font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--white-dim);}
+.ba-img-before span{left:12px;}
+.ba-img-after span{right:12px;}
+.ba-slider-line{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--blue);transform:translateX(-50%);z-index:3;cursor:ew-resize;}
+.ba-slider-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;background:var(--blue);border-radius:50%;display:grid;place-items:center;box-shadow:0 0 16px var(--blue-glow);z-index:4;cursor:ew-resize;}
+.port-meta{padding:18px 20px;}
+.port-meta h3{font-family:var(--font-display);font-size:.95rem;font-weight:600;margin-bottom:4px;}
+.port-meta p{font-size:.78rem;color:var(--white-dim);}
+.port-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+.port-tag{font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px;background:var(--blue-subtle);border:1px solid rgba(59,130,246,.15);color:var(--blue-bright);}
+@media(max-width:768px){.port-grid{grid-template-columns:1fr;}.port-item--wide{grid-column:span 1;}.ba-wrap{height:240px;}.port-item--wide .ba-wrap{height:260px;}}
+</style>
+
+
+<!-- NAV -->
 <nav class="nav" id="mainNav">
   <a href="index.html" class="nav-logo"><div class="nav-logo-mark">AF</div><span>AURAFX</span></a>
   <div class="nav-links">
@@ -129,223 +54,180 @@
   </div>
   <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
 </nav>
-<div class="nav-drawer" id="navDrawer">
-  <a href="index.html">Home</a><a href="services.html">Services</a>
-  <a href="portfolio.html">Portfolio</a><a href="about.html">About</a>
-  <a href="showroom.html">Showroom</a><a href="contact.html">Book Now</a>
-</div>
+<div class="nav-drawer" id="navDrawer"><a href="index.html">Home</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="about.html">About</a><a href="showroom.html">Showroom</a><a href="contact.html">Book Now</a></div>
 
-<div class="port-hero">
-  <p class="label reveal">Our Work</p>
-  <h1 class="display-xl reveal reveal-delay-1">Real cars.<br/>Real results.</h1>
-  <p class="body-lg reveal reveal-delay-2">Every transformation shown here was done on an actual customer vehicle at our Rohini workshop. Drag the slider on any card to compare before and after.</p>
-</div>
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero__bg"></div>
+  <div class="container page-hero__content">
+    <p class="label reveal">Our Work</p>
+    <h1 class="display-xl reveal reveal-d1">Real cars.<br/>Real results.</h1>
+    <p class="body-xl reveal reveal-d2" style="max-width:520px;">Every transformation shown here was done at our Rohini workshop. Drag the slider to compare before and after.</p>
+  </div>
+</section>
 
-<div class="port-filter-bar">
-  <div class="port-filters">
+<!-- FILTER -->
+<div class="filter-bar">
+  <div class="filter-bar__inner">
     <button class="port-filter-btn active" data-filter="all">All Work</button>
     <button class="port-filter-btn" data-filter="wrap">Wraps</button>
     <button class="port-filter-btn" data-filter="ppf">PPF</button>
     <button class="port-filter-btn" data-filter="ceramic">Ceramic</button>
     <button class="port-filter-btn" data-filter="detail">Detailing</button>
-    <button class="port-filter-btn" data-filter="custom">Custom Builds</button>
+    <button class="port-filter-btn" data-filter="custom">Custom</button>
   </div>
 </div>
 
 
+<!-- PORTFOLIO GRID -->
 <div class="port-main">
-  <div class="port-grid" id="portGrid">
+<div class="container">
+<div class="port-grid">
 
-    <div class="port-item port-item--lg reveal reveal-delay-1" data-category="wrap" data-title="Tata Nexon — Full Matte Black Wrap" data-desc="Complete exterior wrap in premium 3M Matte Black. Door jambs, handles, mirrors all wrapped." onclick="openLightbox(this)">
-      <div class="ba-slider-wrap" data-slider>
-        <div class="ba-img-before" style="background:linear-gradient(135deg,#1a1a1a,#2d2d2d)"><span>Before</span></div>
-        <div class="ba-img-after"  style="background:linear-gradient(135deg,#0a0a0a,#111)"><span>After</span></div>
-        <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 4l-4 5 4 5M12 4l4 5-4 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-      </div>
-      <div class="port-meta">
-        <div class="port-meta-row"><h3>Tata Nexon — Full Matte Black Wrap</h3></div>
-        <p>Complete exterior transformation. All panels, jambs & handles wrapped.</p>
-        <div class="port-tags"><span class="port-tag">Full Wrap</span><span class="port-tag">Matte Black</span><span class="port-tag">3M</span></div>
-      </div>
+  <!-- Item 1 — Wide -->
+  <div class="port-item port-item--wide reveal reveal-d1" data-category="wrap">
+    <div class="ba-wrap" data-slider>
+      <div class="ba-img-after" style="background:linear-gradient(135deg,#0a0a0a,#111);"><span>After</span></div>
+      <div class="ba-img-before" style="background:linear-gradient(135deg,#1a1a1a,#2d2d2d);"><span>Before</span></div>
+      <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3l-3 5 3 5M11 3l3 5-3 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
     </div>
-
-    <div class="port-item reveal reveal-delay-2" data-category="ceramic" data-title="Honda City — Ceramic Coating" data-desc="9H ceramic coating applied after paint correction. Hydrophobic finish that lasts 5 years." onclick="openLightbox(this)">
-      <div class="ba-slider-wrap" data-slider>
-        <div class="ba-img-before" style="background:linear-gradient(135deg,#2a1f1f,#3a2a2a)"><span>Before</span></div>
-        <div class="ba-img-after"  style="background:linear-gradient(135deg,#1a1f2d,#2d3347)"><span>After</span></div>
-        <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 4l-4 5 4 5M12 4l4 5-4 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-      </div>
-      <div class="port-meta">
-        <div class="port-meta-row"><h3>Honda City — Ceramic Coating</h3></div>
-        <p>9H coating with 5-year protection and deep gloss finish.</p>
-        <div class="port-tags"><span class="port-tag">Ceramic</span><span class="port-tag">9H</span><span class="port-tag">Gloss</span></div>
-      </div>
+    <div class="port-meta">
+      <h3>Tata Nexon — Full Matte Black Wrap</h3>
+      <p>Complete exterior including door jambs, handles & mirrors</p>
+      <div class="port-tags"><span class="port-tag">Full Wrap</span><span class="port-tag">Matte Black</span><span class="port-tag">3M</span></div>
     </div>
-
-    <div class="port-item reveal reveal-delay-1" data-category="wrap" data-title="Hyundai Creta — Satin Blue Wrap" data-desc="Full satin blue wrap with chrome delete and gloss black alloy wrap." onclick="openLightbox(this)">
-      <div class="ba-slider-wrap" data-slider>
-        <div class="ba-img-before" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"><span>Before</span></div>
-        <div class="ba-img-after"  style="background:linear-gradient(135deg,#0a1520,#0d1f2e)"><span>After</span></div>
-        <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 4l-4 5 4 5M12 4l4 5-4 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-      </div>
-      <div class="port-meta">
-        <div class="port-meta-row"><h3>Hyundai Creta — Satin Blue</h3></div>
-        <p>Full wrap + chrome delete + alloy customisation.</p>
-        <div class="port-tags"><span class="port-tag">Full Wrap</span><span class="port-tag">Satin Blue</span><span class="port-tag">Chrome Delete</span></div>
-      </div>
-    </div>
-
-    <div class="port-item reveal reveal-delay-2" data-category="ppf" data-title="Toyota Fortuner — Full PPF" data-desc="STEK DYNOshield PPF applied to all painted surfaces. Self-healing protection from stone chips." onclick="openLightbox(this)">
-      <div class="ba-slider-wrap" data-slider>
-        <div class="ba-img-before" style="background:linear-gradient(135deg,#201a10,#2a2210)"><span>Before</span></div>
-        <div class="ba-img-after"  style="background:linear-gradient(135deg,#1a2010,#222b14)"><span>After</span></div>
-        <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 4l-4 5 4 5M12 4l4 5-4 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-      </div>
-      <div class="port-meta">
-        <div class="port-meta-row"><h3>Toyota Fortuner — Full PPF</h3></div>
-        <p>STEK DYNOshield, self-healing, 5yr warranty.</p>
-        <div class="port-tags"><span class="port-tag">PPF</span><span class="port-tag">STEK</span><span class="port-tag">Full Car</span></div>
-      </div>
-    </div>
-
-    <div class="port-item port-item--lg reveal reveal-delay-1" data-category="custom" data-title="Maruti Suzuki Brezza — Custom Build" data-desc="Gloss red wrap, chrome delete, black alloy wrap, caliper painting, and full interior detailing." onclick="openLightbox(this)">
-      <div class="ba-slider-wrap" data-slider>
-        <div class="ba-img-before" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"><span>Before</span></div>
-        <div class="ba-img-after"  style="background:linear-gradient(135deg,#200a0a,#3a0d0d)"><span>After</span></div>
-        <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 4l-4 5 4 5M12 4l4 5-4 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-      </div>
-      <div class="port-meta">
-        <div class="port-meta-row"><h3>Maruti Brezza — Full Custom Build</h3></div>
-        <p>Gloss red wrap + chrome delete + alloys + calipers + interior.</p>
-        <div class="port-tags"><span class="port-tag">Full Wrap</span><span class="port-tag">Custom Build</span><span class="port-tag">Interior</span><span class="port-tag">Chrome Delete</span></div>
-      </div>
-    </div>
-
-    <div class="port-item reveal reveal-delay-2" data-category="detail" data-title="Kia Seltos — Paint Correction + Ceramic" data-desc="Two-stage machine polish to remove swirls and deep scratches, followed by 9H ceramic coating." onclick="openLightbox(this)">
-      <div class="ba-slider-wrap" data-slider>
-        <div class="ba-img-before" style="background:linear-gradient(135deg,#2d2010,#3a2a14)"><span>Before</span></div>
-        <div class="ba-img-after"  style="background:linear-gradient(135deg,#1a1400,#2d2200)"><span>After</span></div>
-        <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 4l-4 5 4 5M12 4l4 5-4 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-      </div>
-      <div class="port-meta">
-        <div class="port-meta-row"><h3>Kia Seltos — Paint Correction</h3></div>
-        <p>2-stage correction + 9H ceramic. Swirls fully removed.</p>
-        <div class="port-tags"><span class="port-tag">Correction</span><span class="port-tag">Ceramic</span><span class="port-tag">Detailing</span></div>
-      </div>
-    </div>
-
-    <div class="port-item reveal reveal-delay-1" data-category="wrap" data-title="MG Hector — Colour Shift Wrap" data-desc="Chameleon colour-shift vinyl wrap. Changes from purple to green to gold depending on light angle." onclick="openLightbox(this)">
-      <div class="ba-slider-wrap" data-slider>
-        <div class="ba-img-before" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"><span>Before</span></div>
-        <div class="ba-img-after"  style="background:linear-gradient(135deg,#150a2e,#2d1569,#0a2e0a)"><span>After</span></div>
-        <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 4l-4 5 4 5M12 4l4 5-4 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-      </div>
-      <div class="port-meta">
-        <div class="port-meta-row"><h3>MG Hector — Colour Shift Wrap</h3></div>
-        <p>Chameleon film: purple → green → gold in different light.</p>
-        <div class="port-tags"><span class="port-tag">Colour Shift</span><span class="port-tag">Chameleon</span><span class="port-tag">Full Wrap</span></div>
-      </div>
-    </div>
-
-    <div class="port-item reveal reveal-delay-2" data-category="ppf" data-title="Skoda Slavia — Front Zone PPF" data-desc="Bonnet, fenders, bumper, A-pillars and mirrors covered with STEK DYNOshield." onclick="openLightbox(this)">
-      <div class="ba-slider-wrap" data-slider>
-        <div class="ba-img-before" style="background:linear-gradient(135deg,#1a1a2e,#2a2a3a)"><span>Before</span></div>
-        <div class="ba-img-after"  style="background:linear-gradient(135deg,#0f1f1f,#1a2d2d)"><span>After</span></div>
-        <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 4l-4 5 4 5M12 4l4 5-4 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-      </div>
-      <div class="port-meta">
-        <div class="port-meta-row"><h3>Skoda Slavia — Front Zone PPF</h3></div>
-        <p>Bonnet + fenders + bumper + mirrors. STEK DYNOshield.</p>
-        <div class="port-tags"><span class="port-tag">PPF</span><span class="port-tag">Front Zone</span><span class="port-tag">STEK</span></div>
-      </div>
-    </div>
-
   </div>
 
-  <div style="text-align:center;margin-top:80px;" class="reveal">
-    <p class="body-lg" style="margin-bottom:32px;">Want to see your car in the portfolio?</p>
-    <a href="contact.html" class="btn btn-primary" style="font-size:1rem;padding:16px 48px;">Book Your Transformation</a>
+  <!-- Item 2 -->
+  <div class="port-item reveal reveal-d2" data-category="ceramic">
+    <div class="ba-wrap" data-slider>
+      <div class="ba-img-after" style="background:linear-gradient(135deg,#1a1f2d,#2d3347);"><span>After</span></div>
+      <div class="ba-img-before" style="background:linear-gradient(135deg,#2a1f1f,#3a2a2a);"><span>Before</span></div>
+      <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3l-3 5 3 5M11 3l3 5-3 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+    </div>
+    <div class="port-meta">
+      <h3>Honda City — Ceramic Coating</h3>
+      <p>9H nano-ceramic, 5-year protection</p>
+      <div class="port-tags"><span class="port-tag">Ceramic</span><span class="port-tag">9H</span></div>
+    </div>
   </div>
 
+  <!-- Item 3 -->
+  <div class="port-item reveal reveal-d1" data-category="wrap">
+    <div class="ba-wrap" data-slider>
+      <div class="ba-img-after" style="background:linear-gradient(135deg,#0a1520,#0d1f2e);"><span>After</span></div>
+      <div class="ba-img-before" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a);"><span>Before</span></div>
+      <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3l-3 5 3 5M11 3l3 5-3 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+    </div>
+    <div class="port-meta">
+      <h3>Hyundai Creta — Satin Blue</h3>
+      <p>Full wrap + chrome delete + alloy customisation</p>
+      <div class="port-tags"><span class="port-tag">Satin Blue</span><span class="port-tag">Chrome Delete</span></div>
+    </div>
+  </div>
+
+  <!-- Item 4 -->
+  <div class="port-item reveal reveal-d2" data-category="ppf">
+    <div class="ba-wrap" data-slider>
+      <div class="ba-img-after" style="background:linear-gradient(135deg,#1a2010,#222b14);"><span>After</span></div>
+      <div class="ba-img-before" style="background:linear-gradient(135deg,#201a10,#2a2210);"><span>Before</span></div>
+      <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3l-3 5 3 5M11 3l3 5-3 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+    </div>
+    <div class="port-meta">
+      <h3>Toyota Fortuner — Full PPF</h3>
+      <p>STEK DYNOshield, self-healing, 5yr warranty</p>
+      <div class="port-tags"><span class="port-tag">PPF</span><span class="port-tag">STEK</span></div>
+    </div>
+  </div>
+
+  <!-- Item 5 — Wide -->
+  <div class="port-item port-item--wide reveal reveal-d1" data-category="custom">
+    <div class="ba-wrap" data-slider>
+      <div class="ba-img-after" style="background:linear-gradient(135deg,#200a0a,#3a0d0d);"><span>After</span></div>
+      <div class="ba-img-before" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a);"><span>Before</span></div>
+      <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3l-3 5 3 5M11 3l3 5-3 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+    </div>
+    <div class="port-meta">
+      <h3>Maruti Brezza — Full Custom Build</h3>
+      <p>Gloss red wrap + chrome delete + alloys + calipers + interior</p>
+      <div class="port-tags"><span class="port-tag">Custom Build</span><span class="port-tag">Gloss Red</span><span class="port-tag">Interior</span></div>
+    </div>
+  </div>
+
+  <!-- Item 6 -->
+  <div class="port-item reveal reveal-d2" data-category="detail">
+    <div class="ba-wrap" data-slider>
+      <div class="ba-img-after" style="background:linear-gradient(135deg,#1a1400,#2d2200);"><span>After</span></div>
+      <div class="ba-img-before" style="background:linear-gradient(135deg,#2d2010,#3a2a14);"><span>Before</span></div>
+      <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3l-3 5 3 5M11 3l3 5-3 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+    </div>
+    <div class="port-meta">
+      <h3>Kia Seltos — Paint Correction</h3>
+      <p>2-stage correction + 9H ceramic coating</p>
+      <div class="port-tags"><span class="port-tag">Correction</span><span class="port-tag">Ceramic</span></div>
+    </div>
+  </div>
+
+  <!-- Item 7 -->
+  <div class="port-item reveal reveal-d3" data-category="wrap">
+    <div class="ba-wrap" data-slider>
+      <div class="ba-img-after" style="background:linear-gradient(135deg,#150a2e,#2d1569);"><span>After</span></div>
+      <div class="ba-img-before" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a);"><span>Before</span></div>
+      <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3l-3 5 3 5M11 3l3 5-3 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+    </div>
+    <div class="port-meta">
+      <h3>MG Hector — Colour Shift</h3>
+      <p>Chameleon film: purple → green → gold</p>
+      <div class="port-tags"><span class="port-tag">Colour Shift</span><span class="port-tag">Chameleon</span></div>
+    </div>
+  </div>
+
+  <!-- Item 8 -->
+  <div class="port-item reveal reveal-d4" data-category="ppf">
+    <div class="ba-wrap" data-slider>
+      <div class="ba-img-after" style="background:linear-gradient(135deg,#0f1f1f,#1a2d2d);"><span>After</span></div>
+      <div class="ba-img-before" style="background:linear-gradient(135deg,#1a1a2e,#2a2a3a);"><span>Before</span></div>
+      <div class="ba-slider-line"><div class="ba-slider-handle"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3l-3 5 3 5M11 3l3 5-3 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+    </div>
+    <div class="port-meta">
+      <h3>Skoda Slavia — Front Zone PPF</h3>
+      <p>Bonnet + fenders + bumper + mirrors</p>
+      <div class="port-tags"><span class="port-tag">PPF</span><span class="port-tag">Front Zone</span></div>
+    </div>
+  </div>
+
+</div><!-- /port-grid -->
+
+
+<div style="text-align:center;margin-top:72px;" class="reveal">
+  <p class="body-lg" style="margin-bottom:28px;">Want to see your car here?</p>
+  <a href="contact.html" class="btn btn-primary" style="padding:16px 40px;">Book Your Transformation</a>
 </div>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <div class="lb-close" onclick="closeLightbox()">✕</div>
-  <div class="lb-inner">
-    <div class="lb-car">
-      <div class="lb-car-visual">
-        <span class="lb-car-label" id="lbLabel">AURAFX WORK</span>
-      </div>
-    </div>
-    <div class="lb-info">
-      <div>
-        <h3 id="lbTitle">—</h3>
-        <p id="lbDesc">—</p>
-      </div>
-      <div class="lb-nav">
-        <button class="lb-nav-btn" onclick="lbNav(-1)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-        <button class="lb-nav-btn" onclick="lbNav(1)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-      </div>
-    </div>
-  </div>
-</div>
+</div><!-- /container -->
+</div><!-- /port-main -->
 
+<!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="nav-logo" style="margin-bottom:16px;"><div class="nav-logo-mark">AF</div><span style="color:#C0C8D8;font-family:var(--font-display);font-weight:700;letter-spacing:0.08em;">AURAFX</span></div>
-      <p>Delhi's most trusted automotive transformation studio. Car wrapping, PPF, ceramic coating, and custom builds — done right.</p>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo"><div class="nav-logo-mark">AF</div><span>AURAFX</span></a>
+        <p>Delhi's most trusted automotive transformation studio.</p>
+      </div>
+      <div class="footer-col"><h4>Services</h4><a href="services.html">Car Wrapping</a><a href="services.html">PPF</a><a href="services.html">Ceramic Coating</a><a href="services.html">Detailing</a></div>
+      <div class="footer-col"><h4>Studio</h4><a href="about.html">About</a><a href="portfolio.html">Portfolio</a><a href="showroom.html">Showroom</a><a href="contact.html">Contact</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+919999999999">+91 99999 99999</a><a href="mailto:hello@aurafx.in">hello@aurafx.in</a><a href="contact.html">Sector 8, Rohini, Delhi</a></div>
     </div>
-    <div class="footer-col"><h4>Services</h4><a href="services.html">Car Wrapping</a><a href="services.html">PPF</a><a href="services.html">Ceramic Coating</a><a href="services.html">Detailing</a></div>
-    <div class="footer-col"><h4>Studio</h4><a href="about.html">About Us</a><a href="portfolio.html">Portfolio</a><a href="showroom.html">Showroom</a><a href="contact.html">Contact</a></div>
-    <div class="footer-col"><h4>Contact</h4><a href="tel:+919999999999">+91 99999 99999</a><a href="mailto:hello@aurafx.in">hello@aurafx.in</a><a href="#">Sector 8, Rohini, Delhi</a></div>
+    <div class="footer-bottom"><span>© 2025 AURAFX Automotive Studio.</span><span>Rohini, Delhi, India</span></div>
   </div>
-  <div class="footer-bottom"><span>© 2025 AURAFX Automotive Studio.</span><span>Rohini, Delhi, India</span></div>
 </footer>
-<a href="https://wa.me/919999999999" class="whatsapp-float" target="_blank"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 1C5.477 1 1 5.477 1 11c0 1.89.525 3.66 1.438 5.168L1 21l4.98-1.406A9.953 9.953 0 0 0 11 21c5.523 0 10-4.477 10-10S16.523 1 11 1Z" fill="#25D366"/><path d="M8.09 7.5c.18-.37.54-.5.77-.5.2 0 .37.01.54.01.18 0 .44.07.68.56.27.54.88 2.06.95 2.2.08.15.13.32.03.5-.1.2-.15.32-.3.5-.14.17-.3.38-.43.5-.14.14-.29.28-.12.55.17.26.73 1.18 1.56 1.91.68.6 1.38.88 1.65 1 .27.12.43.1.59-.06.17-.18.7-.81.88-1.07.19-.27.37-.22.62-.13.26.09 1.63.77 1.91.91.27.14.45.21.52.32.07.11.07.63-.15 1.24-.22.61-1.25 1.18-1.72 1.22-.44.04-.86.18-2.87-.62C9.35 15.57 7 12.7 6.82 12.47c-.18-.22-1.32-1.74-1.32-3.32 0-1.58.83-2.35 1.1-2.65.3-.28.64-.28.83-.28l.67.28Z" fill="white"/></svg><span class="wa-text">WhatsApp Us</span></a>
+
+<a href="https://wa.me/919999999999" class="whatsapp-float" target="_blank" rel="noopener">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 1C5.03 1 1 5.03 1 10c0 1.72.48 3.33 1.31 4.7L1 19l4.43-1.28A9 9 0 0 0 10 19c4.97 0 9-4.03 9-9s-4.03-9-9-9Z" fill="#25D366"/><path d="M7.4 6.5c.16-.33.48-.44.69-.44.18 0 .34.01.49.01.16 0 .4.06.62.51.24.49.8 1.88.87 2.01.07.13.12.28.02.45-.09.18-.13.29-.27.45-.13.16-.27.35-.39.45-.12.13-.26.26-.11.5.15.24.66 1.07 1.42 1.74.62.55 1.26.8 1.5.91.24.11.39.09.54-.06.15-.16.63-.74.8-.97.17-.24.33-.2.56-.12.24.08 1.49.7 1.74.83.25.12.41.19.47.29.06.1.06.57-.13 1.13-.2.55-1.14 1.08-1.57 1.12-.4.03-.78.16-2.62-.57-2.44-.94-4.47-3.43-4.6-3.61-.16-.2-1.2-1.59-1.2-3.02 0-1.44.75-2.14 1-2.41.27-.26.58-.26.76-.26l.59.26Z" fill="white"/></svg>
+  <span>WhatsApp Us</span>
+</a>
+
 <script src="script.js"></script>
-<script>
-let currentPortItem = null;
-function openLightbox(el) {
-  currentPortItem = el;
-  document.getElementById('lbTitle').textContent = el.dataset.title || '';
-  document.getElementById('lbDesc').textContent  = el.dataset.desc  || '';
-  document.getElementById('lbLabel').textContent  = (el.dataset.title || 'AURAFX').split('—')[0].trim().toUpperCase();
-  document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow = '';
-}
-function lbNav(dir) {
-  const items = Array.from(document.querySelectorAll('.port-item'));
-  const idx = items.indexOf(currentPortItem);
-  const next = items[(idx + dir + items.length) % items.length];
-  openLightbox(next);
-}
-document.getElementById('lightbox').addEventListener('click', function(e){ if(e.target===this) closeLightbox(); });
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); if(e.key==='ArrowRight') lbNav(1); if(e.key==='ArrowLeft') lbNav(-1); });
-// BA Sliders
-document.querySelectorAll('[data-slider]').forEach(initSlider);
-function initSlider(wrap) {
-  const line = wrap.querySelector('.ba-slider-line');
-  const before = wrap.querySelector('.ba-img-before');
-  let dragging = false;
-  function setPos(x) {
-    const rect = wrap.getBoundingClientRect();
-    let pct = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
-    line.style.left = pct + '%';
-    before.style.clipPath = `inset(0 ${100-pct}% 0 0)`;
-  }
-  line.addEventListener('mousedown', () => dragging = true);
-  line.addEventListener('touchstart', () => dragging = true, {passive:true});
-  window.addEventListener('mouseup',  () => dragging = false);
-  window.addEventListener('touchend', () => dragging = false);
-  window.addEventListener('mousemove', e => { if(dragging) setPos(e.clientX); });
-  window.addEventListener('touchmove', e => { if(dragging) setPos(e.touches[0].clientX); }, {passive:true});
-}
-</script>
 </body>
 </html>
