@@ -4,152 +4,58 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Services — AURAFX Automotive Studio</title>
-<meta name="description" content="Car wrapping, PPF, ceramic coating, detailing, alloy customisation and more. 13 precision automotive services in Rohini, Delhi."/>
+<meta name="description" content="13 precision automotive services: car wrapping, PPF, ceramic coating, detailing, alloy customisation and more in Rohini, Delhi."/>
 <link rel="stylesheet" href="style.css"/>
 <style>
-/* SERVICES PAGE */
-.svc-hero-section { padding-top: calc(var(--nav-h) + 80px); padding-bottom: 80px; background: var(--black); }
-.svc-hero-inner { max-width: 1400px; margin: 0 auto; padding: 0 48px; }
-.svc-hero-inner .label { margin-bottom: 14px; }
-.svc-hero-inner h1 { max-width: 700px; margin-bottom: 24px; }
-.svc-hero-inner p  { max-width: 560px; }
-.svc-filter-bar {
-  position: sticky; top: var(--nav-h); z-index: 100;
-  background: rgba(11,11,15,0.92); backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 48px;
-}
-.svc-filters {
-  max-width: 1400px; margin: 0 auto;
-  display: flex; gap: 0; overflow-x: auto;
-  scrollbar-width: none;
-}
-.svc-filters::-webkit-scrollbar { display: none; }
-.svc-filter-btn {
-  padding: 18px 24px;
-  font-size: 0.8rem; font-weight: 600;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--white-dim);
-  border-bottom: 2px solid transparent;
-  transition: color 0.3s, border-color 0.3s;
-  white-space: nowrap; background: none; border-top: none; border-left: none; border-right: none;
-  cursor: pointer;
-}
-.svc-filter-btn:hover { color: var(--white); }
-.svc-filter-btn.active { color: var(--blue-bright); border-bottom-color: var(--blue); }
-.svc-main { padding: 80px 48px 120px; max-width: 1400px; margin: 0 auto; }
-.svc-category { margin-bottom: 96px; }
-.svc-category-header { margin-bottom: 48px; border-bottom: 1px solid var(--border); padding-bottom: 32px; }
-.svc-category-header h2 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; margin: 12px 0 10px; }
-.svc-category-header p { font-size: 0.9rem; color: var(--white-dim); max-width: 600px; }
-.svc-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px; }
-.service-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  overflow: hidden;
-  transition: border-color 0.4s, transform 0.4s var(--ease-cinema), box-shadow 0.4s;
-  cursor: default;
-}
-.service-card:hover {
-  border-color: rgba(59,130,246,0.3);
-  transform: translateY(-8px);
-  box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(59,130,246,0.08);
-}
-.sc-visual {
-  height: 220px;
-  position: relative;
-  overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-}
-.sc-visual-icon {
-  width: 80px; height: 80px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  display: flex; align-items: center; justify-content: center;
-  transition: transform 0.4s, background 0.4s;
-}
-.service-card:hover .sc-visual-icon { transform: scale(1.1); background: var(--blue-glow2); border-color: rgba(59,130,246,0.3); }
-.sc-badge {
-  position: absolute; top: 16px; right: 16px;
-  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 5px 12px; border-radius: 20px;
-  background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.3); color: var(--blue-bright);
-}
-.sc-badge.popular { background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.3); color: #F59E0B; }
-.sc-badge.new    { background: rgba(34,197,94,0.12); border-color: rgba(34,197,94,0.3); color: #22C55E; }
-.sc-body { padding: 28px; }
-.sc-body h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
-.sc-body p  { font-size: 0.88rem; color: var(--white-dim); line-height: 1.7; margin-bottom: 20px; }
-.sc-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.sc-tag {
-  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-  padding: 4px 10px; border-radius: 4px;
-  background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--white-dim);
-}
-.sc-footer {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 20px 28px;
-  border-top: 1px solid var(--border);
-}
-.sc-price { font-size: 0.8rem; color: var(--white-faint); }
-.sc-price strong { font-size: 1rem; color: var(--white); font-family: var(--font-display); }
-.sc-cta {
-  padding: 8px 18px;
-  border-radius: 6px;
-  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
-  background: var(--blue-glow2); border: 1px solid rgba(59,130,246,0.3); color: var(--blue-bright);
-  transition: background 0.3s, box-shadow 0.3s;
-}
-.sc-cta:hover { background: var(--blue); color: #fff; box-shadow: 0 0 20px var(--blue-glow); }
-.sc-v1 { background: linear-gradient(135deg, #0a1020 0%, #0f1829 100%); }
-.sc-v2 { background: linear-gradient(135deg, #0a1a14 0%, #0f2d1e 100%); }
-.sc-v3 { background: linear-gradient(135deg, #150a20 0%, #1e0f2d 100%); }
-.sc-v4 { background: linear-gradient(135deg, #1a1200 0%, #2d2000 100%); }
-.sc-v5 { background: linear-gradient(135deg, #0a1a1a 0%, #0d2a2a 100%); }
-.sc-v6 { background: linear-gradient(135deg, #1a0a0a 0%, #2d1010 100%); }
-.booking-banner {
-  margin-top: 100px;
-  background: linear-gradient(135deg, var(--graphite-2), var(--graphite-3));
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 64px 80px;
-  display: flex; justify-content: space-between; align-items: center;
-  gap: 40px;
-  position: relative; overflow: hidden;
-}
-.booking-banner::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--blue), transparent);
-}
-.bb-glow {
-  position: absolute; top: -50%; right: -10%;
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(59,130,246,0.08), transparent 70%);
-  pointer-events: none;
-}
-.bb-text h2 { font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin-bottom: 12px; }
-.bb-text p  { font-size: 0.95rem; color: var(--white-dim); max-width: 500px; }
-.bb-actions { display: flex; gap: 14px; flex-shrink: 0; }
-@media (max-width: 1024px) {
-  .svc-hero-inner { padding: 0 32px; }
-  .svc-filter-bar { padding: 0 32px; }
-  .svc-main { padding: 60px 32px 100px; }
-}
-@media (max-width: 768px) {
-  .svc-hero-inner { padding: 0 24px; }
-  .svc-filter-bar { padding: 0 24px; }
-  .svc-main { padding: 48px 24px 80px; }
-  .svc-cards-grid { grid-template-columns: 1fr; }
-  .booking-banner { flex-direction: column; padding: 40px 28px; text-align: center; }
-  .bb-actions { flex-direction: column; width: 100%; }
-  .bb-actions .btn { justify-content: center; }
-}
+.page-hero{padding:calc(var(--nav-h) + 80px) 0 80px;position:relative;overflow:hidden;}
+.page-hero__bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 60% 40%,rgba(59,130,246,0.06),transparent 60%),linear-gradient(180deg,var(--black),var(--surface));}
+.page-hero__grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 60% 50% at 50% 50%,black,transparent);opacity:.5;}
+.page-hero__content{position:relative;z-index:1;}
+.filter-bar{position:sticky;top:var(--nav-h);z-index:100;background:rgba(11,11,15,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 var(--gutter);}
+.filter-bar__inner{max-width:var(--container);margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+.filter-bar__inner::-webkit-scrollbar{display:none;}
+.svc-filter-btn{padding:18px 24px;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--white-dim);border:none;border-bottom:2px solid transparent;background:none;cursor:pointer;white-space:nowrap;transition:color .3s,border-color .3s;}
+.svc-filter-btn:hover{color:var(--white);}
+.svc-filter-btn.active{color:var(--blue-bright);border-bottom-color:var(--blue);}
 </style>
 </head>
 <body>
+
+<style>
+.svc-main{padding:80px 0 120px;}
+.svc-category{margin-bottom:80px;}
+.svc-category__header{margin-bottom:40px;padding-bottom:28px;border-bottom:1px solid var(--border);}
+.svc-category__header h2{font-family:var(--font-display);font-size:1.6rem;font-weight:700;margin:10px 0 8px;}
+.svc-category__header p{font-size:.88rem;color:var(--white-dim);max-width:560px;}
+.svc-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;}
+.svc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:transform .5s var(--ease-out),border-color .4s,box-shadow .5s;cursor:default;}
+.svc-card:hover{transform:translateY(-8px);border-color:var(--border-active);box-shadow:0 32px 80px rgba(0,0,0,.4),0 0 0 1px rgba(59,130,246,.08);}
+.svc-card__visual{height:200px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.svc-card__icon{width:72px;height:72px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:18px;display:grid;place-items:center;transition:transform .4s var(--ease-out),background .4s;}
+.svc-card:hover .svc-card__icon{transform:scale(1.1);background:var(--blue-subtle);border-color:rgba(59,130,246,.2);}
+.svc-card__badge{position:absolute;top:14px;right:14px;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:20px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:var(--blue-bright);}
+.svc-card__badge--popular{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.25);color:#F59E0B;}
+.svc-card__badge--new{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:#22C55E;}
+.svc-card__body{padding:24px;}
+.svc-card__title{font-family:var(--font-display);font-size:1.05rem;font-weight:700;margin-bottom:8px;}
+.svc-card__text{font-size:.84rem;color:var(--white-dim);line-height:1.65;margin-bottom:16px;}
+.svc-card__tags{display:flex;flex-wrap:wrap;gap:6px;}
+.svc-card__tag{font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--white-dim);}
+.svc-card__footer{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-top:1px solid var(--border);}
+.svc-card__price{font-size:.78rem;color:var(--white-faint);}
+.svc-card__price strong{font-size:.95rem;color:var(--white);font-family:var(--font-display);}
+.svc-card__cta{padding:7px 16px;border-radius:6px;font-size:.75rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;background:var(--blue-subtle);border:1px solid rgba(59,130,246,.25);color:var(--blue-bright);transition:all .3s;}
+.svc-card__cta:hover{background:var(--blue);color:#fff;box-shadow:0 0 16px var(--blue-glow);}
+.booking-cta{margin-top:80px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:56px 64px;display:flex;justify-content:space-between;align-items:center;gap:32px;position:relative;overflow:hidden;}
+.booking-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--blue),transparent);}
+.booking-cta__text h2{font-family:var(--font-display);font-size:1.8rem;font-weight:700;margin-bottom:10px;}
+.booking-cta__text p{font-size:.9rem;color:var(--white-dim);max-width:440px;}
+.booking-cta__actions{display:flex;gap:12px;flex-shrink:0;}
+@media(max-width:768px){.svc-cards{grid-template-columns:1fr;}.booking-cta{flex-direction:column;padding:40px 24px;text-align:center;}.booking-cta__actions{width:100%;flex-direction:column;}.booking-cta__actions .btn{justify-content:center;}}
+</style>
+
+
+<!-- NAV -->
 <nav class="nav" id="mainNav">
   <a href="index.html" class="nav-logo"><div class="nav-logo-mark">AF</div><span>AURAFX</span></a>
   <div class="nav-links">
@@ -163,22 +69,23 @@
   <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
 </nav>
 <div class="nav-drawer" id="navDrawer">
-  <a href="index.html">Home</a><a href="services.html">Services</a>
-  <a href="portfolio.html">Portfolio</a><a href="about.html">About</a>
-  <a href="showroom.html">Showroom</a><a href="contact.html">Book Now</a>
+  <a href="index.html">Home</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="about.html">About</a><a href="showroom.html">Showroom</a><a href="contact.html">Book Now</a>
 </div>
 
-
-<section class="svc-hero-section">
-  <div class="svc-hero-inner">
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero__bg"></div>
+  <div class="page-hero__grid"></div>
+  <div class="container page-hero__content">
     <p class="label reveal">13 Specialisations</p>
-    <h1 class="display-xl reveal reveal-delay-1">Every service.<br/>One standard.</h1>
-    <p class="body-lg reveal reveal-delay-2">From a single panel to a complete transformation — each job is delivered with the same uncompromising precision, regardless of the vehicle or budget.</p>
+    <h1 class="display-xl reveal reveal-d1">Every service.<br/>One standard.</h1>
+    <p class="body-xl reveal reveal-d2" style="max-width:540px;">From a single panel to a complete transformation — each job is delivered with uncompromising precision.</p>
   </div>
 </section>
 
-<div class="svc-filter-bar">
-  <div class="svc-filters">
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-bar__inner">
     <button class="svc-filter-btn active" data-filter="all">All Services</button>
     <button class="svc-filter-btn" data-filter="wrap">Wrapping</button>
     <button class="svc-filter-btn" data-filter="protection">Protection</button>
@@ -187,331 +94,267 @@
   </div>
 </div>
 
+
+<!-- MAIN -->
 <div class="svc-main">
+<div class="container">
 
-  <!-- WRAPPING -->
-  <div class="svc-category" data-category="wrap">
-    <div class="svc-category-header reveal">
-      <p class="label">Category 01</p>
-      <h2>Vehicle Wrapping</h2>
-      <p>Transform your car's colour and finish without touching the original paint. Every wrap is removable, protecting resale value.</p>
+<!-- WRAPPING -->
+<div class="svc-category" data-category="wrap">
+  <div class="svc-category__header reveal">
+    <p class="label">Category 01</p>
+    <h2>Vehicle Wrapping</h2>
+    <p>Transform your car's colour without touching the original paint. Fully removable, protects resale value.</p>
+  </div>
+  <div class="svc-cards">
+    <div class="svc-card reveal reveal-d1">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#0a1525,#0f2040);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="3" y="8" width="22" height="12" rx="3" stroke="#3B82F6" stroke-width="1.5"/><circle cx="8" cy="22" r="2.5" stroke="#3B82F6" stroke-width="1.5"/><circle cx="20" cy="22" r="2.5" stroke="#3B82F6" stroke-width="1.5"/></svg></div>
+        <span class="svc-card__badge svc-card__badge--popular">Most Popular</span>
+      </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Full Car Wrap</h3>
+        <p class="svc-card__text">Complete exterior transformation. All panels, jambs, handles, and pillars wrapped flawlessly.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">Gloss</span><span class="svc-card__tag">Matte</span><span class="svc-card__tag">Satin</span><span class="svc-card__tag">Chrome</span><span class="svc-card__tag">Colour Shift</span></div>
+      </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹35,000</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
     </div>
-    <div class="svc-cards-grid">
-      <div class="service-card reveal reveal-delay-1">
-        <div class="sc-visual sc-v1">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="10" width="28" height="16" rx="3" stroke="#3B82F6" stroke-width="1.5"/><path d="M8 10V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v2" stroke="#3B82F6" stroke-width="1.5"/><circle cx="10" cy="28" r="3" stroke="#3B82F6" stroke-width="1.5"/><circle cx="26" cy="28" r="3" stroke="#3B82F6" stroke-width="1.5"/></svg>
-          </div>
-          <span class="sc-badge popular">Most Popular</span>
-        </div>
-        <div class="sc-body">
-          <h3>Full Car Wrap</h3>
-          <p>Complete exterior transformation covering all body panels. Flawless finish from roof to rockers including door jambs, handles, and pillars.</p>
-          <div class="sc-tags">
-            <span class="sc-tag">Gloss</span><span class="sc-tag">Matte</span><span class="sc-tag">Satin</span><span class="sc-tag">Chrome</span><span class="sc-tag">Colour Shift</span>
-          </div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹35,000</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
+    <div class="svc-card reveal reveal-d2">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#0a1020,#0f1830);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 16c0-5 3-10 9-10s9 5 9 10" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round"/><path d="M5 16h18" stroke="#3B82F6" stroke-width="1.5"/></svg></div>
       </div>
-      <div class="service-card reveal reveal-delay-2">
-        <div class="sc-visual sc-v1">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M6 20c0-6 4-12 12-12s12 6 12 12" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round"/><path d="M6 20h24" stroke="#3B82F6" stroke-width="1.5"/><path d="M10 20v6M26 20v6" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </div>
-        </div>
-        <div class="sc-body">
-          <h3>Partial / Panel Wrap</h3>
-          <p>Bonnet, roof, pillars or any individual panel. Perfect for two-tone designs, accent colours or targeted coverage on a budget.</p>
-          <div class="sc-tags"><span class="sc-tag">Bonnet</span><span class="sc-tag">Roof</span><span class="sc-tag">Pillars</span><span class="sc-tag">Boot</span></div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹8,000</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Partial / Panel Wrap</h3>
+        <p class="svc-card__text">Bonnet, roof, pillars or any panel. Perfect for two-tone designs or targeted coverage.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">Bonnet</span><span class="svc-card__tag">Roof</span><span class="svc-card__tag">Pillars</span></div>
       </div>
-      <div class="service-card reveal reveal-delay-3">
-        <div class="sc-visual sc-v1">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="13" stroke="#3B82F6" stroke-width="1.5"/><path d="M18 5v26M5 18h26" stroke="#3B82F6" stroke-width="1"/><circle cx="18" cy="18" r="6" stroke="#3B82F6" stroke-width="1.5"/></svg>
-          </div>
-          <span class="sc-badge new">New</span>
-        </div>
-        <div class="sc-body">
-          <h3>Colour Shift / Chameleon Wrap</h3>
-          <p>Multi-tone films that shift colour in different lighting conditions. A dramatic effect unique to wrapping — impossible with standard paint.</p>
-          <div class="sc-tags"><span class="sc-tag">Dual-Tone</span><span class="sc-tag">Tri-Tone</span><span class="sc-tag">Pearl</span></div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹55,000</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹8,000</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
+    </div>
+    <div class="svc-card reveal reveal-d3">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#10081a,#1a0d30);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="#3B82F6" stroke-width="1.5"/><circle cx="14" cy="14" r="4" stroke="#3B82F6" stroke-width="1.5"/></svg></div>
+        <span class="svc-card__badge svc-card__badge--new">New</span>
       </div>
-      <div class="service-card reveal reveal-delay-4">
-        <div class="sc-visual sc-v1">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M8 12h20M8 18h14M8 24h10" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round"/><rect x="4" y="6" width="28" height="24" rx="3" stroke="#3B82F6" stroke-width="1.5"/></svg>
-          </div>
-        </div>
-        <div class="sc-body">
-          <h3>Custom Vinyl Graphics</h3>
-          <p>Racing stripes, bespoke designs, logo wraps, or artistic decals. We design and cut in-house for a perfectly tailored result.</p>
-          <div class="sc-tags"><span class="sc-tag">Stripes</span><span class="sc-tag">Decals</span><span class="sc-tag">Logos</span><span class="sc-tag">Custom Art</span></div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹4,000</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Colour Shift / Chameleon</h3>
+        <p class="svc-card__text">Multi-tone films shifting colour in different light. Impossible with standard paint.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">Dual-Tone</span><span class="svc-card__tag">Tri-Tone</span><span class="svc-card__tag">Pearl</span></div>
       </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹55,000</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
+    </div>
+    <div class="svc-card reveal reveal-d4">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#0a0a14,#141420);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 10h16M6 14h12M6 18h8" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Custom Vinyl Graphics</h3>
+        <p class="svc-card__text">Racing stripes, logos, artistic decals. Designed and cut in-house for a tailored result.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">Stripes</span><span class="svc-card__tag">Decals</span><span class="svc-card__tag">Logos</span></div>
+      </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹4,000</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
     </div>
   </div>
-
-  <!-- PROTECTION -->
-  <div class="svc-category" data-category="protection">
-    <div class="svc-category-header reveal">
-      <p class="label">Category 02</p>
-      <h2>Paint Protection</h2>
-      <p>Invisible armour that preserves your car's finish from stone chips, scratches, UV damage, and chemical contaminants.</p>
-    </div>
-    <div class="svc-cards-grid">
-      <div class="service-card reveal reveal-delay-1">
-        <div class="sc-visual sc-v2">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M18 4L6 10v10c0 7 5.4 13.5 12 15 6.6-1.5 12-8 12-15V10L18 4Z" stroke="#22C55E" stroke-width="1.5" stroke-linejoin="round"/><path d="M13 18l3.5 3.5 7-7" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span class="sc-badge popular">Best Value</span>
-        </div>
-        <div class="sc-body">
-          <h3>Paint Protection Film (PPF)</h3>
-          <p>Self-healing thermoplastic urethane film that absorbs stone chips, light scratches, and road debris. Available in gloss and matte finish.</p>
-          <div class="sc-tags"><span class="sc-tag">Self-Healing</span><span class="sc-tag">3M STEK</span><span class="sc-tag">Gloss</span><span class="sc-tag">Matte</span><span class="sc-tag">5yr Warranty</span></div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹25,000</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
-      </div>
-      <div class="service-card reveal reveal-delay-2">
-        <div class="sc-visual sc-v3">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="13" stroke="#8B5CF6" stroke-width="1.5"/><path d="M12 18c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round"/><path d="M18 24a6 6 0 0 1-6-6" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </div>
-        </div>
-        <div class="sc-body">
-          <h3>Ceramic Coating</h3>
-          <p>Nano-ceramic SiO₂ coating that bonds to the paint surface creating a permanent hydrophobic layer. Repels water, dirt, and UV rays for up to 5 years.</p>
-          <div class="sc-tags"><span class="sc-tag">Hydrophobic</span><span class="sc-tag">UV Block</span><span class="sc-tag">Anti-Scratch</span><span class="sc-tag">5yr Coat</span></div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹15,000</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
-      </div>
-      <div class="service-card reveal reveal-delay-3">
-        <div class="sc-visual sc-v2">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="8" y="8" width="20" height="20" rx="2" stroke="#22C55E" stroke-width="1.5"/><path d="M8 14h20M8 20h20" stroke="#22C55E" stroke-width="1.5"/></svg>
-          </div>
-          <span class="sc-badge new">UV Block</span>
-        </div>
-        <div class="sc-body">
-          <h3>Sun Control / UV Films</h3>
-          <p>High-performance window films that reject solar heat, block UV rays up to 99%, and reduce cabin glare. Keeps interiors cooler in Delhi summers.</p>
-          <div class="sc-tags"><span class="sc-tag">99% UV Block</span><span class="sc-tag">Heat Reject</span><span class="sc-tag">Glare Reduce</span></div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹8,000</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- DETAILING -->
-  <div class="svc-category" data-category="detailing">
-    <div class="svc-category-header reveal">
-      <p class="label">Category 03</p>
-      <h2>Detailing & Restoration</h2>
-      <p>Deep-cleaning and restoration that takes your car back to showroom standard — or beyond it.</p>
-    </div>
-    <div class="svc-cards-grid">
-      <div class="service-card reveal reveal-delay-1">
-        <div class="sc-visual sc-v4">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M8 28s2-8 10-8 10 8 10 8" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round"/><circle cx="18" cy="14" r="6" stroke="#F59E0B" stroke-width="1.5"/><path d="M18 8V6M18 22v2M8 14H6M30 14h-2" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </div>
-          <span class="sc-badge popular">Most Booked</span>
-        </div>
-        <div class="sc-body">
-          <h3>Interior & Exterior Detailing</h3>
-          <p>Complete deep-clean, decontamination, and polishing of every surface. Seats, dashboard, door panels, wheels, paint — meticulous from end to end.</p>
-          <div class="sc-tags"><span class="sc-tag">Interior</span><span class="sc-tag">Exterior</span><span class="sc-tag">Paint Polish</span><span class="sc-tag">Odour Remove</span></div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹5,000</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
-      </div>
-      <div class="service-card reveal reveal-delay-2">
-        <div class="sc-visual sc-v4">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="10" stroke="#F59E0B" stroke-width="1.5"/><path d="M14 18l3 3 6-6" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="sc-body">
-          <h3>Scratch Removal & Paint Correction</h3>
-          <p>Multi-stage machine polishing to remove swirl marks, fine scratches, water spots, and oxidation. Restores deep gloss and clarity to the paint.</p>
-          <div class="sc-tags"><span class="sc-tag">Swirl Remove</span><span class="sc-tag">2-Stage Cut</span><span class="sc-tag">Gloss Restore</span></div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹8,000</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
-      </div>
-      <div class="service-card reveal reveal-delay-3">
-        <div class="sc-visual sc-v4">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M10 26L26 10M14 10h12v12" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="sc-body">
-          <h3>Headlight & Taillight Tinting</h3>
-          <p>Smoked or tinted vinyl over headlights and taillights for a sportier, more aggressive look. Fully removable without residue.</p>
-          <div class="sc-tags"><span class="sc-tag">Smoked</span><span class="sc-tag">Tinted</span><span class="sc-tag">Removable</span></div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹3,500</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CUSTOMISATION -->
-  <div class="svc-category" data-category="custom">
-    <div class="svc-category-header reveal">
-      <p class="label">Category 04</p>
-      <h2>Customisation & Styling</h2>
-      <p>Details that make your car distinctly yours — from wheel finishes to interior ambience.</p>
-    </div>
-    <div class="svc-cards-grid">
-      <div class="service-card reveal reveal-delay-1">
-        <div class="sc-visual sc-v5">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="12" stroke="#06B6D4" stroke-width="1.5"/><circle cx="18" cy="18" r="5" stroke="#06B6D4" stroke-width="1.5"/><path d="M18 6v4M18 26v4M6 18h4M26 18h4" stroke="#06B6D4" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </div>
-        </div>
-        <div class="sc-body">
-          <h3>Alloy Wheel Customisation</h3>
-          <p>Powder coating or vinyl wrapping of alloy wheels in any finish or colour. Transforms the look of your car from the ground up.</p>
-          <div class="sc-tags"><span class="sc-tag">Powder Coat</span><span class="sc-tag">Vinyl Wrap</span><span class="sc-tag">All Finishes</span></div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹6,000</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
-      </div>
-      <div class="service-card reveal reveal-delay-2">
-        <div class="sc-visual sc-v6">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M8 24a8 8 0 0 1 8-8h4a8 8 0 0 1 8 8" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round"/><circle cx="18" cy="14" r="3" stroke="#EF4444" stroke-width="1.5"/></svg>
-          </div>
-        </div>
-        <div class="sc-body">
-          <h3>Brake Caliper Painting</h3>
-          <p>High-temperature paint applied to brake calipers in any colour. A subtle but striking upgrade visible through open alloy spokes.</p>
-          <div class="sc-tags"><span class="sc-tag">Heat Resistant</span><span class="sc-tag">Any Colour</span></div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹3,000</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
-      </div>
-      <div class="service-card reveal reveal-delay-3">
-        <div class="sc-visual sc-v5">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M12 10h12l4 6H8l4-6Z" stroke="#06B6D4" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 16v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-8" stroke="#06B6D4" stroke-width="1.5"/></svg>
-          </div>
-        </div>
-        <div class="sc-body">
-          <h3>Chrome Delete / De-chrome</h3>
-          <p>Replace factory chrome trim with gloss black, satin black, or body-colour vinyl. Modernises newer cars and removes the dated chrome look.</p>
-          <div class="sc-tags"><span class="sc-tag">Gloss Black</span><span class="sc-tag">Satin Black</span><span class="sc-tag">Body Colour</span></div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹5,000</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
-      </div>
-      <div class="service-card reveal reveal-delay-4">
-        <div class="sc-visual sc-v3">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="6" y="10" width="24" height="16" rx="2" stroke="#8B5CF6" stroke-width="1.5"/><path d="M14 18h8M18 14v8" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </div>
-          <span class="sc-badge new">Premium</span>
-        </div>
-        <div class="sc-body">
-          <h3>Interior Customisation</h3>
-          <p>Custom leather re-upholstery, contrast stitching, OEM-style ambient lighting upgrades, and alcantara accents for a personalised cabin.</p>
-          <div class="sc-tags"><span class="sc-tag">Leather</span><span class="sc-tag">Alcantara</span><span class="sc-tag">Ambient Light</span><span class="sc-tag">Stitching</span></div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹20,000</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
-      </div>
-      <div class="service-card reveal reveal-delay-5">
-        <div class="sc-visual sc-v5">
-          <div class="sc-visual-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M6 26l4-8h16l4 8H6Z" stroke="#06B6D4" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 18l-2-6h20l-2 6" stroke="#06B6D4" stroke-width="1.5" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="sc-body">
-          <h3>Body Kit Installation</h3>
-          <p>Professional fitting of front splitters, side skirts, rear diffusers, and spoilers. We also wrap or paint body kit components to match or contrast.</p>
-          <div class="sc-tags"><span class="sc-tag">Splitters</span><span class="sc-tag">Skirts</span><span class="sc-tag">Diffusers</span><span class="sc-tag">Spoilers</span></div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-price">Starting at <strong>₹12,000</strong></div>
-          <a href="contact.html" class="sc-cta">Get Quote</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="booking-banner reveal">
-    <div class="bb-glow"></div>
-    <div class="bb-text">
-      <h2>Not sure what you need?</h2>
-      <p>Our team will assess your car and recommend the right combination of services for your goals and budget. No obligation.</p>
-    </div>
-    <div class="bb-actions">
-      <a href="contact.html" class="btn btn-primary">Book a Free Consult</a>
-      <a href="https://wa.me/919999999999" class="btn btn-outline" target="_blank">WhatsApp Us</a>
-    </div>
-  </div>
-
 </div>
 
-<footer class="footer">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="nav-logo" style="margin-bottom:16px;"><div class="nav-logo-mark">AF</div><span style="color:#C0C8D8;font-family:var(--font-display);font-weight:700;letter-spacing:0.08em;">AURAFX</span></div>
-      <p>Delhi's most trusted automotive transformation studio. Car wrapping, PPF, ceramic coating, and custom builds — done right.</p>
-    </div>
-    <div class="footer-col"><h4>Services</h4><a href="services.html">Car Wrapping</a><a href="services.html">PPF</a><a href="services.html">Ceramic Coating</a><a href="services.html">Detailing</a><a href="services.html">Custom Builds</a></div>
-    <div class="footer-col"><h4>Studio</h4><a href="about.html">About Us</a><a href="portfolio.html">Portfolio</a><a href="showroom.html">Showroom</a><a href="contact.html">Contact</a></div>
-    <div class="footer-col"><h4>Contact</h4><a href="tel:+919999999999">+91 99999 99999</a><a href="mailto:hello@aurafx.in">hello@aurafx.in</a><a href="contact.html">Sector 8, Rohini, Delhi</a></div>
+
+<!-- PROTECTION -->
+<div class="svc-category" data-category="protection">
+  <div class="svc-category__header reveal">
+    <p class="label">Category 02</p>
+    <h2>Paint Protection</h2>
+    <p>Invisible armour preserving your finish from stone chips, scratches, UV, and contaminants.</p>
   </div>
-  <div class="footer-bottom"><span>© 2025 AURAFX Automotive Studio.</span><span>Rohini, Delhi, India</span></div>
+  <div class="svc-cards">
+    <div class="svc-card reveal reveal-d1">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#0a1a12,#0f2d1a);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 3L5 8v8c0 5.5 4 10.5 9 12 5-1.5 9-6.5 9-12V8L14 3Z" stroke="#22C55E" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 14l3 3 5-5" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="svc-card__badge svc-card__badge--popular">Best Value</span>
+      </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Paint Protection Film (PPF)</h3>
+        <p class="svc-card__text">Self-healing TPU film absorbing stone chips and scratches. Gloss and matte finish available.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">Self-Healing</span><span class="svc-card__tag">3M / STEK</span><span class="svc-card__tag">5yr Warranty</span></div>
+      </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹25,000</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
+    </div>
+    <div class="svc-card reveal reveal-d2">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#150a20,#1e0f30);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="#8B5CF6" stroke-width="1.5"/><path d="M10 14c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Ceramic Coating</h3>
+        <p class="svc-card__text">Nano-ceramic SiO₂ creating a permanent hydrophobic layer. Repels water, dirt, and UV for up to 5 years.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">Hydrophobic</span><span class="svc-card__tag">UV Block</span><span class="svc-card__tag">5yr</span></div>
+      </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹15,000</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
+    </div>
+    <div class="svc-card reveal reveal-d3">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#0a1510,#0f2518);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="6" y="6" width="16" height="16" rx="2" stroke="#22C55E" stroke-width="1.5"/><path d="M6 12h16M6 18h16" stroke="#22C55E" stroke-width="1.5"/></svg></div>
+        <span class="svc-card__badge svc-card__badge--new">UV Block</span>
+      </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Sun Control / UV Films</h3>
+        <p class="svc-card__text">Window films rejecting solar heat, blocking 99% UV, reducing cabin glare.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">99% UV</span><span class="svc-card__tag">Heat Reject</span><span class="svc-card__tag">Glare Reduce</span></div>
+      </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹8,000</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- DETAILING -->
+<div class="svc-category" data-category="detailing">
+  <div class="svc-category__header reveal">
+    <p class="label">Category 03</p>
+    <h2>Detailing & Restoration</h2>
+    <p>Deep-cleaning and restoration to showroom standard — or beyond it.</p>
+  </div>
+  <div class="svc-cards">
+    <div class="svc-card reveal reveal-d1">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#1a1200,#2d1e00);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="11" r="5" stroke="#F59E0B" stroke-width="1.5"/><path d="M6 22s2-6 8-6 8 6 8 6" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <span class="svc-card__badge svc-card__badge--popular">Most Booked</span>
+      </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Interior & Exterior Detailing</h3>
+        <p class="svc-card__text">Complete deep-clean, decontamination, and polishing of every surface.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">Interior</span><span class="svc-card__tag">Exterior</span><span class="svc-card__tag">Polish</span></div>
+      </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹5,000</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
+    </div>
+    <div class="svc-card reveal reveal-d2">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#1a1000,#2d1800);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="8" stroke="#F59E0B" stroke-width="1.5"/><path d="M11 14l2.5 2.5 5-5" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Paint Correction & Scratch Removal</h3>
+        <p class="svc-card__text">Multi-stage machine polishing to remove swirls, scratches, and oxidation.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">Swirl Remove</span><span class="svc-card__tag">2-Stage</span><span class="svc-card__tag">Gloss Restore</span></div>
+      </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹8,000</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
+    </div>
+    <div class="svc-card reveal reveal-d3">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#140e00,#221600);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M8 20L20 8M12 8h8v8" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Headlight & Taillight Tinting</h3>
+        <p class="svc-card__text">Smoked or tinted vinyl for a sportier look. Fully removable without residue.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">Smoked</span><span class="svc-card__tag">Tinted</span><span class="svc-card__tag">Removable</span></div>
+      </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹3,500</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CUSTOMISATION -->
+<div class="svc-category" data-category="custom">
+  <div class="svc-category__header reveal">
+    <p class="label">Category 04</p>
+    <h2>Customisation & Styling</h2>
+    <p>Details that make your car distinctly yours — from wheels to interior ambience.</p>
+  </div>
+  <div class="svc-cards">
+    <div class="svc-card reveal reveal-d1">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#0a1818,#0d2828);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="9" stroke="#06B6D4" stroke-width="1.5"/><circle cx="14" cy="14" r="4" stroke="#06B6D4" stroke-width="1.5"/><path d="M14 5v3M14 20v3M5 14h3M20 14h3" stroke="#06B6D4" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Alloy Wheel Customisation</h3>
+        <p class="svc-card__text">Powder coating or vinyl wrapping in any finish or colour.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">Powder Coat</span><span class="svc-card__tag">Vinyl</span><span class="svc-card__tag">All Finishes</span></div>
+      </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹6,000</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
+    </div>
+    <div class="svc-card reveal reveal-d2">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#1a0808,#2d1010);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M7 20a6 6 0 016-6h2a6 6 0 016 6" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="12" r="2.5" stroke="#EF4444" stroke-width="1.5"/></svg></div>
+      </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Brake Caliper Painting</h3>
+        <p class="svc-card__text">High-temperature paint in any colour. Visible through open alloy spokes.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">Heat Resistant</span><span class="svc-card__tag">Any Colour</span></div>
+      </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹3,000</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
+    </div>
+    <div class="svc-card reveal reveal-d3">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#0a0a14,#141420);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M10 8h8l3 5H7l3-5Z" stroke="#06B6D4" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 13v6a2 2 0 002 2h10a2 2 0 002-2v-6" stroke="#06B6D4" stroke-width="1.5"/></svg></div>
+      </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Chrome Delete / De-chrome</h3>
+        <p class="svc-card__text">Replace chrome trim with gloss/satin black vinyl. Modernises the look instantly.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">Gloss Black</span><span class="svc-card__tag">Satin</span><span class="svc-card__tag">Body Colour</span></div>
+      </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹5,000</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
+    </div>
+    <div class="svc-card reveal reveal-d4">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#10081a,#1a0d2e);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="5" y="8" width="18" height="12" rx="2" stroke="#8B5CF6" stroke-width="1.5"/><path d="M11 14h6M14 11v6" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <span class="svc-card__badge svc-card__badge--new">Premium</span>
+      </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Interior Customisation</h3>
+        <p class="svc-card__text">Leather re-upholstery, contrast stitching, ambient lighting, alcantara accents.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">Leather</span><span class="svc-card__tag">Alcantara</span><span class="svc-card__tag">Ambient</span></div>
+      </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹20,000</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
+    </div>
+    <div class="svc-card reveal reveal-d5">
+      <div class="svc-card__visual" style="background:linear-gradient(135deg,#0a1212,#0d2020);">
+        <div class="svc-card__icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 20l3-6h12l3 6H5Z" stroke="#06B6D4" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 14l-1.5-4h15l-1.5 4" stroke="#06B6D4" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="svc-card__body">
+        <h3 class="svc-card__title">Body Kit Installation</h3>
+        <p class="svc-card__text">Splitters, side skirts, diffusers, spoilers — professionally fitted and colour-matched.</p>
+        <div class="svc-card__tags"><span class="svc-card__tag">Splitters</span><span class="svc-card__tag">Skirts</span><span class="svc-card__tag">Spoilers</span></div>
+      </div>
+      <div class="svc-card__footer"><div class="svc-card__price">From <strong>₹12,000</strong></div><a href="contact.html" class="svc-card__cta">Get Quote</a></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- BOOKING CTA -->
+<div class="booking-cta reveal">
+  <div class="booking-cta__text">
+    <h2>Not sure what you need?</h2>
+    <p>Our team will assess your car and recommend the right combination of services. No obligation.</p>
+  </div>
+  <div class="booking-cta__actions">
+    <a href="contact.html" class="btn btn-primary">Book a Free Consult</a>
+    <a href="https://wa.me/919999999999" class="btn btn-outline" target="_blank">WhatsApp Us</a>
+  </div>
+</div>
+
+</div><!-- /container -->
+</div><!-- /svc-main -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo"><div class="nav-logo-mark">AF</div><span>AURAFX</span></a>
+        <p>Delhi's most trusted automotive transformation studio.</p>
+      </div>
+      <div class="footer-col"><h4>Services</h4><a href="services.html">Car Wrapping</a><a href="services.html">PPF</a><a href="services.html">Ceramic Coating</a><a href="services.html">Detailing</a></div>
+      <div class="footer-col"><h4>Studio</h4><a href="about.html">About</a><a href="portfolio.html">Portfolio</a><a href="showroom.html">Showroom</a><a href="contact.html">Contact</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+919999999999">+91 99999 99999</a><a href="mailto:hello@aurafx.in">hello@aurafx.in</a><a href="contact.html">Sector 8, Rohini, Delhi</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025 AURAFX Automotive Studio.</span><span>Rohini, Delhi, India</span></div>
+  </div>
 </footer>
 
-<a href="https://wa.me/919999999999?text=Hi%20AURAFX!%20I%27d%20like%20to%20enquire%20about%20your%20services." class="whatsapp-float" target="_blank" rel="noopener">
-  <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 1C5.477 1 1 5.477 1 11c0 1.89.525 3.66 1.438 5.168L1 21l4.98-1.406A9.953 9.953 0 0 0 11 21c5.523 0 10-4.477 10-10S16.523 1 11 1Z" fill="#25D366"/><path d="M8.09 7.5c.18-.37.54-.5.77-.5.2 0 .37.01.54.01.18 0 .44.07.68.56.27.54.88 2.06.95 2.2.08.15.13.32.03.5-.1.2-.15.32-.3.5-.14.17-.3.38-.43.5-.14.14-.29.28-.12.55.17.26.73 1.18 1.56 1.91.68.6 1.38.88 1.65 1 .27.12.43.1.59-.06.17-.18.7-.81.88-1.07.19-.27.37-.22.62-.13.26.09 1.63.77 1.91.91.27.14.45.21.52.32.07.11.07.63-.15 1.24-.22.61-1.25 1.18-1.72 1.22-.44.04-.86.18-2.87-.62C9.35 15.57 7 12.7 6.82 12.47c-.18-.22-1.32-1.74-1.32-3.32 0-1.58.83-2.35 1.1-2.65.3-.28.64-.28.83-.28l.67.28Z" fill="white"/></svg>
-  <span class="wa-text">WhatsApp Us</span>
+<!-- WhatsApp Float -->
+<a href="https://wa.me/919999999999" class="whatsapp-float" target="_blank" rel="noopener">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 1C5.03 1 1 5.03 1 10c0 1.72.48 3.33 1.31 4.7L1 19l4.43-1.28A9 9 0 0 0 10 19c4.97 0 9-4.03 9-9s-4.03-9-9-9Z" fill="#25D366"/><path d="M7.4 6.5c.16-.33.48-.44.69-.44.18 0 .34.01.49.01.16 0 .4.06.62.51.24.49.8 1.88.87 2.01.07.13.12.28.02.45-.09.18-.13.29-.27.45-.13.16-.27.35-.39.45-.12.13-.26.26-.11.5.15.24.66 1.07 1.42 1.74.62.55 1.26.8 1.5.91.24.11.39.09.54-.06.15-.16.63-.74.8-.97.17-.24.33-.2.56-.12.24.08 1.49.7 1.74.83.25.12.41.19.47.29.06.1.06.57-.13 1.13-.2.55-1.14 1.08-1.57 1.12-.4.03-.78.16-2.62-.57-2.44-.94-4.47-3.43-4.6-3.61-.16-.2-1.2-1.59-1.2-3.02 0-1.44.75-2.14 1-2.41.27-.26.58-.26.76-.26l.59.26Z" fill="white"/></svg>
+  <span>WhatsApp Us</span>
 </a>
+
 <script src="script.js"></script>
 </body>
 </html>
